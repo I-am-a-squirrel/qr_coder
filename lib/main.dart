@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:qr/qr.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 void main() {
   runApp(const QrApp());
+}
+
+class MyQrCode {
+  late String textForQrCode;
+  late int version;
+  late int errorCorrectionLevel;
+  late Color backgroundColor;
+  late Color foregroundColor;
+  late double errorWidgetHeight;
+  late double errorWidgetWidth;
+  late String errorText;
+  Container errorStateBuilder () {
+    return Container(
+      height: errorWidgetHeight,
+      width: errorWidgetWidth,
+      child: Text(
+        errorText,
+      ),
+    );
+  }
 }
 
 class QrApp extends StatelessWidget {
@@ -50,6 +70,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  late TextEditingController _controller;
+  late MyQrCode currentQrCode;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +119,13 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            /*const Text(
-              'You have pushed the button this many times:',
-            ),*/
+            TextField(
+              controller: _controller,
+              onSubmitted: (String localStringForQrCode) async {
+                currentQrCode.textForQrCode = localStringForQrCode;
 
+      },
+            ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
