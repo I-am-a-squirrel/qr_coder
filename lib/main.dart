@@ -6,14 +6,14 @@ void main() {
 }
 
 class MyQrCode {
-  late String textForQrCode;
-  late int version;
-  late int errorCorrectionLevel;
-  late Color backgroundColor;
-  late Color foregroundColor;
-  late double errorWidgetHeight;
-  late double errorWidgetWidth;
-  late String errorText;
+  String textForQrCode;
+  int version;
+  int errorCorrectionLevel;
+  Color backgroundColor;
+  Color foregroundColor;
+  double errorWidgetHeight;
+  double errorWidgetWidth;
+  String errorText;
   Container errorStateBuilder () {
     return Container(
       height: errorWidgetHeight,
@@ -23,6 +23,16 @@ class MyQrCode {
       ),
     );
   }
+  MyQrCode (
+      this.textForQrCode,
+      this.version,
+      this.errorCorrectionLevel,
+      this.backgroundColor,
+      this.foregroundColor,
+      this.errorWidgetHeight,
+      this.errorWidgetWidth,
+      this.errorText,
+      );
 }
 
 class QrApp extends StatelessWidget {
@@ -64,6 +74,8 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
+
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -71,7 +83,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late TextEditingController _controller;
-  late MyQrCode currentQrCode;
+  MyQrCode currentQrCode = MyQrCode(
+      "Fuck all wars! Хуй всем войнам! 1921",
+      40,
+      QrErrorCorrectLevel.H,
+      Colors.white,
+      Colors.black,
+      MediaQuery.of(context).size.height,
+      MediaQuery.of(context).size.width,
+      "Something's happened");
 
   @override
   void initState() {
