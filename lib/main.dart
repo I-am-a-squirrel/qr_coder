@@ -4,7 +4,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 void main() {
   runApp(const QrApp());
 }
-
+/*
+A class to describe all features of QR-code object
+ */
 class MyQrCode {
   String textForQrCode;
   int version;
@@ -23,6 +25,7 @@ class MyQrCode {
       ),
     );
   }
+  //Constructor
   MyQrCode (
       this.textForQrCode,
       this.version,
@@ -74,15 +77,16 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
-
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+
+
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  late TextEditingController _controller;
+  int _counter = 0;//delete after
+  late TextEditingController _controller;//controller of text edit field
+  /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
       "Fuck all wars! Хуй всем войнам! 1921",
       40,
