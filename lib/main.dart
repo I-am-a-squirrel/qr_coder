@@ -84,7 +84,6 @@ class MyHomePage extends StatefulWidget {
 
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;//delete after
   late TextEditingController _controller;//controller of text edit field
   /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
@@ -93,8 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
       QrErrorCorrectLevel.H,
       Colors.white,
       Colors.black,
-      MediaQuery.of(context).size.height,
-      MediaQuery.of(context).size.width,
+      200.0,
+      200.0,
       "Something's happened");
 
   @override
@@ -147,13 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
               controller: _controller,
               onSubmitted: (String localStringForQrCode) async {
                 currentQrCode.textForQrCode = localStringForQrCode;
-
+                currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;
+                currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;
       },
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            )
           ],
         ),
       ),
