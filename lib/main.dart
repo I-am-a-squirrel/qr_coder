@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:math';
 
 void main() {
   runApp(const QrApp());
@@ -142,13 +143,18 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            QrImage(
+              data: currentQrCode.textForQrCode,
+              version: currentQrCode.version,
+              errorCorrectionLevel: currentQrCode.errorCorrectionLevel,
+              ),
             TextField(
               controller: _controller,
               onSubmitted: (String localStringForQrCode) async {
                 currentQrCode.textForQrCode = localStringForQrCode;
                 currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;
                 currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;
-      },
+              },
             )
           ],
         ),
