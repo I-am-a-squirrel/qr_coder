@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:math';
 
 void main() {
   runApp(const QrApp());
@@ -88,14 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller;//controller of text edit field
   /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
-      "Fuck all wars! Хуй всем войнам! 1921",
-      40,
-      QrErrorCorrectLevel.H,
-      Colors.white,
-      Colors.black,
-      200.0,
-      200.0,
-      "Something's happened");
+      "Fuck all wars! Хуй всем войнам! 1921",//default textForQrCode
+      40,//default version
+      QrErrorCorrectLevel.H,//default errorCorrectLevel
+      Colors.white,//default backgroundColor
+      Colors.black,//default foregroundColor
+      200.0,//default errorWidgetHeight
+      200.0,//default errorWidgetWidth
+      "Something's happened"//default errorText
+  );
 
   @override
   void initState() {
@@ -147,13 +147,16 @@ class _MyHomePageState extends State<MyHomePage> {
               data: currentQrCode.textForQrCode,
               version: currentQrCode.version,
               errorCorrectionLevel: currentQrCode.errorCorrectionLevel,
+              backgroundColor: currentQrCode.backgroundColor,
+              foregroundColor: currentQrCode.foregroundColor,
+              errorStateBuilder: ,
               ),
             TextField(
               controller: _controller,
               onSubmitted: (String localStringForQrCode) async {
-                currentQrCode.textForQrCode = localStringForQrCode;
-                currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;
-                currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;
+                currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
+                currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;//updating QR-code error massage height
+                currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;//updating QR-code error message width
               },
             )
           ],
