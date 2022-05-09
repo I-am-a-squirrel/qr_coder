@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Colors.black,//default foregroundColor
       200.0,//default errorWidgetHeight
       200.0,//default errorWidgetWidth
-      "Something's happened"//default errorText
+      "Something's happened",//default errorText
   );
 
   @override
