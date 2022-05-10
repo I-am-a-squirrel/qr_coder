@@ -104,11 +104,13 @@ class _MyHomePageState extends State<MyHomePage> {
     _controller = TextEditingController();
   }
 
+ 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
                 currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;//updating QR-code error massage height
                 currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;//updating QR-code error message width
+                initState();
               },
             )
           ],
