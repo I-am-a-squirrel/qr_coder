@@ -123,10 +123,11 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(
               controller: _controller,
               onSubmitted: (String localStringForQrCode) async {
-                currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
-                currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;//updating QR-code error massage height
-                currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;//updating QR-code error message width
-                initState();
+                setState((){
+                  currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
+                  currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;//updating QR-code error massage height
+                  currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;//updating QR-code error message width
+                });
               },
             )
           ],
