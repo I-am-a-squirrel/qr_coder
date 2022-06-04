@@ -91,6 +91,14 @@ class _MyHomePageState extends State<MyHomePage> {
     _controller.dispose();
     super.dispose();
   }
+
+  void _updateQrCode(String qrCodeString, double widgetHeight, double widgetWidth) {
+    setState((){
+                  currentQrCode.textForQrCode = qrCodeString;//updating QR-code string
+                  currentQrCode.errorWidgetHeight = 0.8 * widgetHeight ;//updating QR-code error massage height
+                  currentQrCode.errorWidgetWidth = 0.8 * widgetWidth;//updating QR-code error message width
+              });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -123,13 +131,20 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(
               controller: _controller,
               onSubmitted: (String localStringForQrCode) async {
-                setState((){
                   currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
-                  currentQrCode.errorWidgetHeight = 0.8 * MediaQuery.of(context).size.height;//updating QR-code error massage height
-                  currentQrCode.errorWidgetWidth = 0.8 * MediaQuery.of(context).size.width;//updating QR-code error message width
-                });
               },
-            )
+            ),
+            ElevatedButton(
+              style: themeStyleOf(context),
+              onPressed: () {
+                _updateQrCode(
+                  currentQrCode.textForQrCode,
+                  MediaQuery.of(context).size.height,
+                  MediaQuery.of(context).size.width,
+                );
+              },
+              child: const Text('Update'),
+            ),
           ],
         ),
       ),
