@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:math';
 
 void main() {
   runApp(const QrApp());
@@ -92,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  void _updateQrCode(String qrCodeString, double widgetHeight, double widgetWidth) {
+  void updateQrCode(String qrCodeString, double widgetHeight, double widgetWidth) {
     setState((){
                   currentQrCode.textForQrCode = qrCodeString;//updating QR-code string
                   currentQrCode.errorWidgetHeight = 0.8 * widgetHeight ;//updating QR-code error massage height
@@ -135,9 +136,11 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ElevatedButton(
-              style: themeStyleOf(context),
+              style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20)
+              ),
               onPressed: () {
-                _updateQrCode(
+                updateQrCode(
                   currentQrCode.textForQrCode,
                   MediaQuery.of(context).size.height,
                   MediaQuery.of(context).size.width,
