@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             TextField(
               controller: _controller,
-              onSubmitted: (String localStringForQrCode) async {
+              onChanged: (String localStringForQrCode) async {
                   currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
               },
             ),
