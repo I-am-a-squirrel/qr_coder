@@ -38,6 +38,11 @@ dependencies:
   qr: ^2.1.0
   flutter_launcher_icons: ^0.9.3
 
+flutter_icons:
+  image_path: "assets/icons/app-icon.png"
+  android: true
+  ios: false
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
