@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.Myself.qr_coder">
    <application
-        android:label="qr_coder"
+        android:label="QR-coder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
