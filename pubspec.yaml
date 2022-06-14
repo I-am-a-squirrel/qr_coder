@@ -37,6 +37,7 @@ dependencies:
   qr_flutter: ^4.0.0
   qr: ^2.1.0
   flutter_launcher_icons: ^0.9.3
+  getwidget: ^3.0.1
 
 flutter_icons:
   image_path: "assets/icons/app-icon.png"

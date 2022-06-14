@@ -8,6 +8,8 @@ import 'package:flutter_launcher_icons/main.dart';
 import 'package:flutter_launcher_icons/utils.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 
+import 'package:getwidget/getwidget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -143,6 +145,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
               },
             ),
+
+            /*
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 20)
@@ -155,6 +159,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: const Text('Update'),
+            ),
+            */
+            GFIconButton(
+              icon: const Text('Update'),
+              onPressed: () {
+                updateQrCode(
+                  currentQrCode.textForQrCode,
+                  MediaQuery.of(context).size.height,
+                  MediaQuery.of(context).size.width,
+                );
+              },
+              size: 50,
             ),
           ],
         ),
