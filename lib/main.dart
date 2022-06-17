@@ -116,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -145,12 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
               },
             ),
-
-            /*
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20)
-              ),
+            GFButton(
               onPressed: () {
                 updateQrCode(
                   currentQrCode.textForQrCode,
@@ -159,18 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: const Text('Update'),
-            ),
-            */
-            GFIconButton(
-              icon: const Text('Update'),
-              onPressed: () {
-                updateQrCode(
-                  currentQrCode.textForQrCode,
-                  MediaQuery.of(context).size.height,
-                  MediaQuery.of(context).size.width,
-                );
-              },
-              size: 50,
             ),
           ],
         ),
