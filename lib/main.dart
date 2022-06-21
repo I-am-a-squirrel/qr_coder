@@ -140,12 +140,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 return currentQrCode.errorStateBuilder();//Error widget generating
                 },
               ),
-            TextField(
+            GFTextField(
               controller: _controller,
+              //TextField look
+              decoration: InputDecoration(
+                constraints: BoxConstraints.expand(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: 20,
+                ),
+              ),
               onChanged: (String localStringForQrCode) async {
-                  currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
+                currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
               },
             ),
+            //Update button
             GFButton(
               onPressed: () {
                 updateQrCode(
