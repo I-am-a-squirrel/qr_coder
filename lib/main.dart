@@ -114,7 +114,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: GFAppBar(
+        //Menu in the AppBar
+        leading: Builder(
+          builder: (BuildContext context) {
+            return GFIconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).GFDrawer(
+                  
+                );
+              },
+            );
+          },
+        ),
         title: Text(widget.title),
         centerTitle: true,
       ),
