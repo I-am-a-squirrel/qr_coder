@@ -50,6 +50,31 @@ class MyQrCode {
       );
 }
 
+class ColorTheme {
+  bool red;
+  bool green;
+  bool blue;
+
+  ColorTheme(
+    this.red,
+    this.green,
+    this.blue,
+  );
+
+  Color themeColor(Color defaultColor) {
+    int intRed = this.red ? 255 : 0;
+    int intGreen = this.green ? 255 : 0;
+    int intBlue = this.blue ? 255 : 0;
+
+    if (this.red && this.green && this.blue) {
+      return defaultColor; //Default preferences
+    }else{
+      return Color.fromARGB(255, intRed, intGreen, intBlue); //Customized preferences
+    };
+  };
+  
+}
+
 class QrApp extends StatelessWidget {
   const QrApp({Key? key}) : super(key: key);
 
@@ -58,6 +83,7 @@ class QrApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'QR-coder',
+      //Not sure if theme even needed. To try remove later!
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -91,6 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
       "Something's happened"//default errorText
   );
 
+  ColorTheme currentColorTheme = ColorTheme(
+    true,
+    true,
+    true,
+  );
+  
   @override
   void initState() {
     super.initState();
@@ -108,7 +140,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   currentQrCode.textForQrCode = qrCodeString;//updating QR-code string
                   currentQrCode.errorWidgetHeight = 0.8 * widgetHeight ;//updating QR-code error massage height
                   currentQrCode.errorWidgetWidth = 0.8 * widgetWidth;//updating QR-code error message width
-              });
+                });
+  }
+
+  void updateColorTheme(bool nextRed, bool nextGreen, bool nextBlue) {
+    setState((){
+                  currentColorTheme.red = nextRed;
+                  currentColorTheme.green = nextGreen;
+                  currentColorTheme.blue = nextBlue;
+                });
   }
   
   @override
@@ -122,7 +162,25 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).GFDrawer(
-                  
+                  child: <Widget> [
+                    GFToggle(
+                      onChanged: (bool redValue) {
+                        updateColorTheme(redValue, currentColorTheme.green, currentColorTheme.blue);
+                      };
+                    ),
+                    const Divider(),
+                    GFtoggle(
+                      onChanged: (bool greenValue) {
+                        updateColorTheme(currentColorTheme.red, greenValue, currentColorTheme.blue);
+                      };
+                    ),
+                    const Divider(),
+                    GFtoggle(
+                      onChanged: (bool blueValue) {
+                        updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue);
+                      };
+                    ),
+                  ],
                 );
               },
             );
