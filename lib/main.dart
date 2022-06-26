@@ -71,7 +71,7 @@ class ColorTheme {
     }else{
       return Color.fromARGB(255, intRed, intGreen, intBlue); //Customized preferences
     };
-  };
+  }
   
 }
 
@@ -161,24 +161,28 @@ class _MyHomePageState extends State<MyHomePage> {
             return GFIconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                Scaffold.of(context).GFDrawer(
+                //Scaffold.of(context).GFDrawer(
+                GFDrawer(
                   child: <Widget> [
                     GFToggle(
-                      onChanged: (bool redValue) {
+                      onChanged: (bool? redValue) {
                         updateColorTheme(redValue, currentColorTheme.green, currentColorTheme.blue);
-                      };
+                      },
+                      value: currentColorTheme.red,
                     ),
                     const Divider(),
-                    GFtoggle(
-                      onChanged: (bool greenValue) {
+                    GFToggle(
+                      onChanged: (bool? greenValue) {
                         updateColorTheme(currentColorTheme.red, greenValue, currentColorTheme.blue);
-                      };
+                      },
+                      value: currentColorTheme.green,
                     ),
                     const Divider(),
-                    GFtoggle(
-                      onChanged: (bool blueValue) {
+                    GFToggle(
+                      onChanged: (bool? blueValue) {
                         updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue);
-                      };
+                      },
+                      value: currentColorTheme.blue,
                     ),
                   ],
                 );
