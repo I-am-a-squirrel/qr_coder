@@ -161,33 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return GFIconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                GFDrawer(
-                  child: ListView(
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      GFToggle(
-                        onChanged: (bool? redValue) {
-                          updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
-                        },
-                        value: currentColorTheme.red,
-                      ),
-                      const Divider(),
-                      GFToggle(
-                        onChanged: (bool? greenValue) {
-                          updateColorTheme(currentColorTheme.red, greenValue as bool, currentColorTheme.blue);
-                        },
-                        value: currentColorTheme.green,
-                      ),
-                      const Divider(),
-                      GFToggle(
-                        onChanged: (bool? blueValue) {
-                          updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
-                        },
-                        value: currentColorTheme.blue,
-                      ),
-                    ],
-                  ), 
-                );
+                
               },
             );
           },
@@ -244,6 +218,33 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      drawer: GFDrawer(
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      GFToggle(
+                        onChanged: (bool? redValue) {
+                          updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
+                        },
+                        value: currentColorTheme.red,
+                      ),
+                      const Divider(),
+                      GFToggle(
+                        onChanged: (bool? greenValue) {
+                          updateColorTheme(currentColorTheme.red, greenValue as bool, currentColorTheme.blue);
+                        },
+                        value: currentColorTheme.green,
+                      ),
+                      const Divider(),
+                      GFToggle(
+                        onChanged: (bool? blueValue) {
+                          updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
+                        },
+                        value: currentColorTheme.blue,
+                      ),
+                    ],
+                  ), 
+                );
     );
   }
 }
