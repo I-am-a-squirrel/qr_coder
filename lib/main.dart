@@ -47,8 +47,12 @@ class MyQrCode {
       this.errorWidgetHeight,
       this.errorWidgetWidth,
       this.errorText,
-      );
-}
+    );
+  }
+    
+/*
+
+*/
 
 class ColorTheme {
   bool red;
@@ -104,6 +108,7 @@ class MyHomePage extends StatefulWidget {
 
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController _controller;//controller of text edit field
   /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
@@ -156,7 +161,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _closeDrawer() {
-    Navigator.of(context).pop();
+    _scaffoldKey.currentState!.closeDrawer();
+  }
+
+  void _switchDrawerState() {
+    if(_scaffoldKey.currentState.isDrawerOpen){
+      _closeDrawer();
+    }else{
+      _openDrawer();
+    };
   }
   
   @override
@@ -170,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return GFIconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                
+                _switchDrawerState();
               },
             );
           },
