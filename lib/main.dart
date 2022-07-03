@@ -150,10 +150,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   currentColorTheme.blue = nextBlue;
                 });
   }
+
+  void _openDrawer() {
+    _scaffoldKey.currentState!.openDrawer();
+  }
+
+  void _closeDrawer() {
+    Navigator.of(context).pop();
+  }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: GFAppBar(
         //Menu in the AppBar
         leading: Builder(
