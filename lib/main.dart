@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _switchDrawerState() {
-    if(_scaffoldKey.currentState.isDrawerOpen){
+    if(_scaffoldKey.currentState!.isDrawerOpen){
       _closeDrawer();
     }else{
       _openDrawer();
@@ -265,8 +265,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         value: currentColorTheme.blue,
                       ),
                     ],
-                  ), 
+                  ),
                 );
-    );
+              );
   }
 }
