@@ -244,20 +244,33 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      GFToggle(
-                        onChanged: (bool? redValue) {
-                          updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
-                        },
-                        value: currentColorTheme.red,
+                      /*
+                      Red color deactivation toggle
+                      */
+                      Center(
+                        child: GFToggle(
+                          onChanged: (bool? redValue) {
+                            updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
+                          },
+                          value: currentColorTheme.red,
+                        ),
                       ),
                       const Divider(),
+                      /*
+                      Green color deactivation toggle
+                      */
                       GFToggle(
                         onChanged: (bool? greenValue) {
                           updateColorTheme(currentColorTheme.red, greenValue as bool, currentColorTheme.blue);
                         },
                         value: currentColorTheme.green,
                       ),
+
+                      
                       const Divider(),
+                      /*
+                      Blue color deactivation toggle
+                      */
                       GFToggle(
                         onChanged: (bool? blueValue) {
                           updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
@@ -266,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                );
+                ),
               );
   }
 }
