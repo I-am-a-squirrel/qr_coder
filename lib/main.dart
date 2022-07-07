@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+
 import 'package:flutter_launcher_icons/android.dart';
 import 'package:flutter_launcher_icons/constants.dart';
 import 'package:flutter_launcher_icons/custom_exceptions.dart';
@@ -110,6 +112,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController _controller;//controller of text edit field
+  final _advancedDrawerController = AdvancedDrawerController();//controller for Drawer
   /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
       "Fuck all wars! Хуй всем войнам! 1921",//default textForQrCode
@@ -191,95 +194,112 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            /*
-            Widget generating QR-code
-            */
-            QrImage(
-              data: currentQrCode.textForQrCode,//QR-code message
-              version: currentQrCode.version,//QR-code version
-              errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
-              //Get the optimal size for QR-code based on context
-              size: 0.8 * min(
-                MediaQuery.of(context).size.width,//Width of the context
-                MediaQuery.of(context).size.height//Height of the context
-              ),
-              backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
-              foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
-              errorStateBuilder: (cxt, err) {
-                return currentQrCode.errorStateBuilder();//Error widget generating
-                },
-              ),
-            GFTextField(
-              controller: _controller,
-              //TextField look
-              decoration: InputDecoration(
-                constraints: BoxConstraints.expand(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 20,
+      body: AdvancedDrawer(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              /*
+              Widget generating QR-code
+              */
+              QrImage(
+                data: currentQrCode.textForQrCode,//QR-code message
+                version: currentQrCode.version,//QR-code version
+                errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
+                //Get the optimal size for QR-code based on context
+                size: 0.8 * min(
+                  MediaQuery.of(context).size.width,//Width of the context
+                  MediaQuery.of(context).size.height//Height of the context
                 ),
-              ),
-              onChanged: (String localStringForQrCode) async {
-                currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
-              },
+                backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
+                foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
+                errorStateBuilder: (cxt, err) {
+                  return currentQrCode.errorStateBuilder();//Error widget generating
+                  },
+                ),
+                GFTextField(
+                  controller: _controller,
+                  //TextField look
+                  decoration: InputDecoration(
+                    constraints: BoxConstraints.expand(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: 20,
+                    ),
+                  ),
+                  onChanged: (String localStringForQrCode) async {
+                    currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
+                  },
+                ),
+                //Update button
+                GFButton(
+                  onPressed: () {
+                    updateQrCode(
+                      currentQrCode.textForQrCode,
+                      MediaQuery.of(context).size.height,
+                      MediaQuery.of(context).size.width,
+                    );
+                  },
+                  child: const Text('Update'),
+                ),
+              ],
             ),
-            //Update button
-            GFButton(
-              onPressed: () {
-                updateQrCode(
-                  currentQrCode.textForQrCode,
-                  MediaQuery.of(context).size.height,
-                  MediaQuery.of(context).size.width,
-                );
-              },
-              child: const Text('Update'),
-            ),
-          ],
-        ),
-      ),
-      drawer: GFDrawer(
-                  child: ListView(
+          ),
+          drawer: GFDrawer(
+                    child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: [
                       /*
                       Red color deactivation toggle
                       */
                       Center(
-                        child: GFToggle(
-                          onChanged: (bool? redValue) {
-                            updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
-                          },
-                          value: currentColorTheme.red,
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),//free space around
+                          child: GFToggle(
+                            onChanged: (bool? redValue) {
+                              updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
+                            },
+                            value: currentColorTheme.red,
+                          ),
                         ),
                       ),
+                      
                       const Divider(),
                       /*
                       Green color deactivation toggle
                       */
-                      GFToggle(
-                        onChanged: (bool? greenValue) {
-                          updateColorTheme(currentColorTheme.red, greenValue as bool, currentColorTheme.blue);
-                        },
-                        value: currentColorTheme.green,
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),//free space around
+                          child: GFToggle(
+                            onChanged: (bool? redValue) {
+                              updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
+                            },
+                            value: currentColorTheme.red,
+                          ),
+                        ),
                       ),
 
-                      
                       const Divider(),
                       /*
                       Blue color deactivation toggle
                       */
-                      GFToggle(
-                        onChanged: (bool? blueValue) {
-                          updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
-                        },
-                        value: currentColorTheme.blue,
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),//free space around
+                          child: GFToggle(
+                            onChanged: (bool? blueValue) {
+                              updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
+                            },
+                            value: currentColorTheme.blue,
+                          ),
+                        ),
                       ),
+
+                      const Divider(),
                     ],
                   ),
                 ),
-              );
+              ),
+            );
   }
 }
