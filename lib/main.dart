@@ -51,9 +51,11 @@ class MyQrCode {
       this.errorText,
     );
   }
+
+Color backgroundColor = Colors.white;//Global background color
     
 /*
-
+  The current color theme state
 */
 
 class ColorTheme {
@@ -92,6 +94,7 @@ class QrApp extends StatelessWidget {
       //Not sure if theme even needed. To try remove later!
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        backgroundColor: backgroundColor,
       ),
       home: const MyHomePage(title: 'QR-coder'),
     );
@@ -259,6 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
                             },
                             value: currentColorTheme.red,
+                            duration: const Duration(milliseconds: 100),
                           ),
                         ),
                       ),
@@ -275,6 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
                             },
                             value: currentColorTheme.red,
+                            duration: const Duration(milliseconds: 100),
                           ),
                         ),
                       ),
@@ -291,6 +296,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
                             },
                             value: currentColorTheme.blue,
+                            duration: const Duration(milliseconds: 100),
                           ),
                         ),
                       ),
