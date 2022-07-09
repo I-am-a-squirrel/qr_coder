@@ -1,14 +1,12 @@
-import 'dart:math';
+import 'dart:math' show min;
 
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
-import 'package:flutter_launcher_icons/android.dart';
-import 'package:flutter_launcher_icons/constants.dart';
-import 'package:flutter_launcher_icons/custom_exceptions.dart';
-import 'package:flutter_launcher_icons/ios.dart';
-import 'package:flutter_launcher_icons/main.dart';
-import 'package:flutter_launcher_icons/utils.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
+import 'package:icons_launcher/constants.dart';
+import 'package:icons_launcher/custom_exceptions.dart';
+import 'package:icons_launcher/main.dart';
+import 'package:icons_launcher/utils.dart';
+import 'package:icons_launcher/xml_templates.dart';
 
 import 'package:getwidget/getwidget.dart';
 
@@ -91,7 +89,6 @@ class QrApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'QR-coder',
-      //Not sure if theme even needed. To try remove later!
       theme: ThemeData(
         primarySwatch: Colors.blue,
         backgroundColor: backgroundColor,
@@ -114,7 +111,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late TextEditingController _controller;//controller of text edit field
+  late TextEditingController _qrCodeTextController;//controller of text edit field
   final _advancedDrawerController = AdvancedDrawerController();//controller for Drawer
   /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
@@ -137,12 +134,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _qrCodeTextController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _qrCodeTextController.dispose();
     super.dispose();
   }
 
@@ -198,53 +195,57 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: AdvancedDrawer(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              /*
-              Widget generating QR-code
-              */
-              QrImage(
-                data: currentQrCode.textForQrCode,//QR-code message
-                version: currentQrCode.version,//QR-code version
-                errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
-                //Get the optimal size for QR-code based on context
-                size: 0.8 * min(
-                  MediaQuery.of(context).size.width,//Width of the context
-                  MediaQuery.of(context).size.height//Height of the context
-                ),
-                backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
-                foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
-                errorStateBuilder: (cxt, err) {
-                  return currentQrCode.errorStateBuilder();//Error widget generating
-                  },
-                ),
-                GFTextField(
-                  controller: _controller,
-                  //TextField look
-                  decoration: InputDecoration(
-                    constraints: BoxConstraints.expand(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: 20,
-                    ),
+        child: Container(
+          color: backgroundColor,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                /*
+                Widget generating QR-code
+                */
+                QrImage(
+                  data: currentQrCode.textForQrCode,//QR-code message
+                  version: currentQrCode.version,//QR-code version
+                  errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
+                  //Get the optimal size for QR-code based on context
+                  size: 0.8 * min(
+                    MediaQuery.of(context).size.width,//Width of the context
+                    MediaQuery.of(context).size.height//Height of the context
                   ),
-                  onChanged: (String localStringForQrCode) async {
-                    currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
-                  },
-                ),
-                //Update button
-                GFButton(
-                  onPressed: () {
-                    updateQrCode(
-                      currentQrCode.textForQrCode,
-                      MediaQuery.of(context).size.height,
-                      MediaQuery.of(context).size.width,
-                    );
-                  },
-                  child: const Text('Update'),
-                ),
-              ],
+                  backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
+                  foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
+                  errorStateBuilder: (cxt, err) {
+                    return currentQrCode.errorStateBuilder();//Error widget generating
+                    },
+                  ),
+                  GFTextField(
+                    controller: _qrCodeTextController,
+                    //TextField look
+                    decoration: InputDecoration(
+                      hintText: "Input your text",
+                      constraints: BoxConstraints.expand(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 20,
+                      ),
+                    ),
+                    onChanged: (String localStringForQrCode) async {
+                      currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
+                    },
+                  ),
+                  //Update button
+                  GFButton(
+                    onPressed: () {
+                      updateQrCode(
+                        currentQrCode.textForQrCode,
+                        MediaQuery.of(context).size.height,
+                        MediaQuery.of(context).size.width,
+                      );
+                    },
+                    child: const Text('Update'),
+                  ),
+                ],
+              ),
             ),
           ),
           drawer: GFDrawer(
@@ -262,6 +263,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
                             },
                             value: currentColorTheme.red,
+                            enabledTrackColor: Colors.red,
                             duration: const Duration(milliseconds: 100),
                           ),
                         ),
@@ -275,10 +277,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Padding(
                           padding: EdgeInsets.all(10.0),//free space around
                           child: GFToggle(
-                            onChanged: (bool? redValue) {
-                              updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
+                            onChanged: (bool? greenValue) {
+                              updateColorTheme(currentColorTheme.red, greenValue as bool, currentColorTheme.blue);
                             },
-                            value: currentColorTheme.red,
+                            value: currentColorTheme.green,
+                            enabledTrackColor: Colors.green,
                             duration: const Duration(milliseconds: 100),
                           ),
                         ),
@@ -296,6 +299,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
                             },
                             value: currentColorTheme.blue,
+                            enabledTrackColor: Colors.blue,
                             duration: const Duration(milliseconds: 100),
                           ),
                         ),
