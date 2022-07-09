@@ -186,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return GFIconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                _switchDrawerState();
+                _advancedDrawerController.toggleDrawer();
               },
             );
           },
@@ -195,6 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: AdvancedDrawer(
+        key: _advancedDrawerController,
         child: Container(
           color: backgroundColor,
           child: Center(
