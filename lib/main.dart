@@ -112,7 +112,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController _qrCodeTextController;//controller of text edit field
-  final _advancedDrawerController = AdvancedDrawerController();//controller for Drawer
+  late AdvancedDrawerController _advancedDrawerControllerKey; //
+  
+  
   /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
       "Fuck all wars! Хуй всем войнам! 1921",//default textForQrCode
@@ -186,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return GFIconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                _advancedDrawerController.toggleDrawer();
+                _advancedDrawerControllerKey.toggleDrawer();
               },
             );
           },
@@ -195,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: AdvancedDrawer(
-        key: _advancedDrawerController,
+        key: _advancedDrawerControllerKey,
         child: Container(
           color: backgroundColor,
           child: Center(
