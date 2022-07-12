@@ -110,9 +110,11 @@ class MyHomePage extends StatefulWidget {
 
 
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late TextEditingController _qrCodeTextController;//controller of text edit field
-  late AdvancedDrawerController _advancedDrawerControllerKey; //
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); //key for current status of Scaffold
+  final GlobalKey<AdvancedDrawerState> _advancedDrawerKey = GlobalKey<AdvancedDrawerState>(); //key for current status of Advanced Drawer
+  
+  late TextEditingController _qrCodeTextController; //controller of text edit field
+  late AdvancedDrawerController _advancedDrawerController; //controller for body animation
   
   
   /*Initializing QR-code for MyHomePage*/
@@ -197,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: AdvancedDrawer(
-        key: _advancedDrawerControllerKey,
+        key: _advancedDrawerKey,
         child: Container(
           color: backgroundColor,
           child: Center(
@@ -312,6 +314,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
+                controller: _advancedDrawerController,
               ),
             );
   }
