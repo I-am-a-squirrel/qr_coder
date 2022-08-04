@@ -13,45 +13,14 @@ import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'classes/my_qr_code.dart';
+
+import 'global_variables.dart';
+
 void main() {
   runApp(const QrApp());
 }
-/*
-A class to describe all features of QR-code object
- */
-class MyQrCode {
-  String textForQrCode;
-  int version;
-  int errorCorrectionLevel;
-  Color backgroundColor;
-  Color foregroundColor;
-  double errorWidgetHeight;
-  double errorWidgetWidth;
-  String errorText;
-  Container errorStateBuilder () {
-    return Container(
-      height: errorWidgetHeight,
-      width: errorWidgetWidth,
-      child: Text(
-        errorText,
-      ),
-    );
-  }
-  //Constructor
-  MyQrCode (
-      this.textForQrCode,
-      this.version,
-      this.errorCorrectionLevel,
-      this.backgroundColor,
-      this.foregroundColor,
-      this.errorWidgetHeight,
-      this.errorWidgetWidth,
-      this.errorText,
-    );
-  }
 
-Color backgroundColor = Colors.white;//Global background color
-    
 /*
   The current color theme state
 */
@@ -107,11 +76,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
-
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); //key for current status of Scaffold
-  final GlobalKey<AdvancedDrawerState> _advancedDrawerKey = GlobalKey<AdvancedDrawerState>(); //key for current status of Advanced Drawer
   
   late TextEditingController _qrCodeTextController; //controller of text edit field
   late AdvancedDrawerController _advancedDrawerController; //controller for body animation
@@ -200,59 +166,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: AdvancedDrawer(
         key: _advancedDrawerKey,
-        child: Container(
-          color: backgroundColor,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                /*
-                Widget generating QR-code
-                */
-                QrImage(
-                  data: currentQrCode.textForQrCode,//QR-code message
-                  version: currentQrCode.version,//QR-code version
-                  errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
-                  //Get the optimal size for QR-code based on context
-                  size: 0.8 * min(
-                    MediaQuery.of(context).size.width,//Width of the context
-                    MediaQuery.of(context).size.height//Height of the context
-                  ),
-                  backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
-                  foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
-                  errorStateBuilder: (cxt, err) {
-                    return currentQrCode.errorStateBuilder();//Error widget generating
-                    },
-                  ),
-                  GFTextField(
-                    controller: _qrCodeTextController,
-                    //TextField look
-                    decoration: InputDecoration(
-                      hintText: "Input your text",
-                      constraints: BoxConstraints.expand(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: 20,
-                      ),
-                    ),
-                    onChanged: (String localStringForQrCode) async {
-                      currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
-                    },
-                  ),
-                  //Update button
-                  GFButton(
-                    onPressed: () {
-                      updateQrCode(
-                        currentQrCode.textForQrCode,
-                        MediaQuery.of(context).size.height,
-                        MediaQuery.of(context).size.width,
-                      );
-                    },
-                    child: const Text('Update'),
-                  ),
-                ],
-              ),
-            ),
-          ),
           drawer: GFDrawer(
                     child: ListView(
                     physics: NeverScrollableScrollPhysics(),
@@ -315,7 +228,60 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 controller: _advancedDrawerController,
+        child: Container(
+          color: backgroundColor,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                /*
+                Widget generating QR-code
+                */
+                QrImage(
+                  data: currentQrCode.textForQrCode,//QR-code message
+                  version: currentQrCode.version,//QR-code version
+                  errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
+                  //Get the optimal size for QR-code based on context
+                  size: 0.8 * min(
+                    MediaQuery.of(context).size.width,//Width of the context
+                    MediaQuery.of(context).size.height//Height of the context
+                  ),
+                  backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
+                  foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
+                  errorStateBuilder: (cxt, err) {
+                    return currentQrCode.errorStateBuilder();//Error widget generating
+                    },
+                  ),
+                  GFTextField(
+                    controller: _qrCodeTextController,
+                    //TextField look
+                    decoration: InputDecoration(
+                      hintText: "Input your text",
+                      constraints: BoxConstraints.expand(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 20,
+                      ),
+                    ),
+                    onChanged: (String localStringForQrCode) async {
+                      currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
+                    },
+                  ),
+                  //Update button
+                  GFButton(
+                    onPressed: () {
+                      updateQrCode(
+                        currentQrCode.textForQrCode,
+                        MediaQuery.of(context).size.height,
+                        MediaQuery.of(context).size.width,
+                      );
+                    },
+                    child: const Text('Update'),
+                  ),
+                ],
               ),
-            );
+            ),
+         ),
+       ),
+     );
   }
 }
