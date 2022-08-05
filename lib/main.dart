@@ -13,10 +13,10 @@ import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'classes/color_theme.dart';
-import 'classes/my_qr_code.dart';
+//import 'classes/color_theme.dart';
+//import 'classes/my_qr_code.dart';
 
-import 'global_variables.dart';
+//import 'global_variables.dart';
 
 void main() {
   runApp(const QrApp());
