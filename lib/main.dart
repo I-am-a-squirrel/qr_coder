@@ -13,41 +13,13 @@ import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'classes/color_theme.dart';
 import 'classes/my_qr_code.dart';
 
 import 'global_variables.dart';
 
 void main() {
   runApp(const QrApp());
-}
-
-/*
-  The current color theme state
-*/
-
-class ColorTheme {
-  bool red;
-  bool green;
-  bool blue;
-
-  ColorTheme(
-    this.red,
-    this.green,
-    this.blue,
-  );
-
-  Color themeColor(Color defaultColor) {
-    int intRed = this.red ? 255 : 0;
-    int intGreen = this.green ? 255 : 0;
-    int intBlue = this.blue ? 255 : 0;
-
-    if (this.red && this.green && this.blue) {
-      return defaultColor; //Default preferences
-    }else{
-      return Color.fromARGB(255, intRed, intGreen, intBlue); //Customized preferences
-    };
-  }
-  
 }
 
 class QrApp extends StatelessWidget {
