@@ -1,7 +1,6 @@
 //The root app of visual interface
 
 import 'package:flutter/material.dart';
-import '/global_variables.dart';
 import '/widgets/stateful/my_home_page.dart';
 
 class QrApp extends StatelessWidget {
@@ -20,4 +19,3 @@ class QrApp extends StatelessWidget {
     );
   }
 }
-
