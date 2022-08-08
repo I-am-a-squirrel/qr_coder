@@ -1,22 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:qr_coder/widgets/states/my_app_bar_state.dart';
 
 class MyAppBar extends StatefulWidget {
-	Widget build(BuildContext context) {
-		return GFAppBar(
-        //Menu in the AppBar
-        leading: Builder(
-          builder: (BuildContext context) {
-            return GFIconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                _advancedDrawerControllerKey.toggleDrawer();
-              },
-            );
-          },
-        ),
-        title: Text(widget.title),
-        centerTitle: true,
-      )
-	}
-}
+	const MyAppBar({Key? key}) : super(key: key);
+
+	@override
+	State<MyAppBar> createState() => MyAppBarState();
+} 
