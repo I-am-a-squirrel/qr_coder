@@ -1,6 +1,7 @@
 //The state of MyAppBar
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:qr_coder/widgets/getwidgets/my_app_bar.dart';
 
 class MyAppBarState extends State<MyAppBar> {
 	@override
@@ -19,6 +20,6 @@ class MyAppBarState extends State<MyAppBar> {
         ),
         title: Text(widget.title),
         centerTitle: true,
-      )
+      );
 	}
 }
