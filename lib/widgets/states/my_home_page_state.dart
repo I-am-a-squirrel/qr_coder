@@ -7,9 +7,7 @@ import 'package:qr_coder/widgets/getwidgets/my_app_bar.dart';
 import 'package:qr_coder/classes/my_qr_code.dart';
 
 class MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); //key for current status of Scaffold
-  
-  late TextEditingController _qrCodeTextController; //controller of text edit field
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>(); //key for current status of Scaffold
   
   /*Initializing QR-code for MyHomePage*/
   MyQrCode currentQrCode = MyQrCode(
@@ -28,23 +26,11 @@ class MyHomePageState extends State<MyHomePage> {
     true,
     true,
   );
-  
-  @override
-  void initState() {
-    super.initState();
-    _qrCodeTextController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _qrCodeTextController.dispose();
-    super.dispose();
-  }
 
     @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       appBar: MyAppBar(),
       body: MyBody(),
      );

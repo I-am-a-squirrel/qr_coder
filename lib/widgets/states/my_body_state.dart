@@ -6,9 +6,24 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:qr_coder/widgets/getwidgets/my_drawer.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
+import 'package:qr_coder/widgets/states/my_home_page_state.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MyBodyState extends State<MyBody> {
+	late TextEditingController _qrCodeTextController; //controller of text field
+ 
+  @override
+  void initState() {
+    super.initState();
+    _qrCodeTextController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _qrCodeTextController.dispose();
+    super.dispose();
+  }
+
 	Widget build(BuildContext context) {
 		return AdvancedDrawer(
         key: _advancedDrawerKey,
