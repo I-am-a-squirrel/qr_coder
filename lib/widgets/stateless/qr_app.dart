@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '/widgets/stateful/my_home_page.dart';
+import 'package:qr_coder/global_variables.dart';
 
 class QrApp extends StatelessWidget {
   const QrApp({Key? key}) : super(key: key);

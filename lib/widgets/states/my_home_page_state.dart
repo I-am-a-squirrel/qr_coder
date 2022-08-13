@@ -27,11 +27,11 @@ class MyHomePageState extends State<MyHomePage> {
     true,
   );
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: MyAppBar(),
+      appBar: MyAppBar(title: widget.title),
       body: MyBody(),
      );
   }
