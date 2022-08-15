@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
+
 class MyColorInheritedScheme extends InheritedWidget {
 	const MyColorInheritedScheme({
 		Key?: key,
 		required this.red,
 		required this.green,
 		required this.blue,
-	}) : super();
+		required Widget child,
+	}) : super(Key: key, child: child);
 
 	final bool red;
 	final bool green;
