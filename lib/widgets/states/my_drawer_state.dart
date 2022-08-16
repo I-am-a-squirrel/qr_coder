@@ -17,9 +17,9 @@ class MyDrawerState extends State<MyDrawer> {
                           padding: EdgeInsets.all(10.0),//free space around
                           child: GFToggle(
                             onChanged: (bool? redValue) {
-                              updateColorTheme(redValue as bool, currentColorTheme.green, currentColorTheme.blue);
-                            },
-                            value: currentColorTheme.red,
+															MyColorInheritedScheme.updateScheme(redValue, _, _);	
+														},
+                            value: MyColorInheritedScheme.of(myHomePageContext).red,
                             enabledTrackColor: Colors.red,
                             duration: const Duration(milliseconds: 100),
                           ),
@@ -37,7 +37,7 @@ class MyDrawerState extends State<MyDrawer> {
                             onChanged: (bool? greenValue) {
                               updateColorTheme(currentColorTheme.red, greenValue as bool, currentColorTheme.blue);
                             },
-                            value: currentColorTheme.green,
+                            value: MyColorInheritedScheme.of(myHomePageContext).green,
                             enabledTrackColor: Colors.green,
                             duration: const Duration(milliseconds: 100),
                           ),
@@ -55,7 +55,7 @@ class MyDrawerState extends State<MyDrawer> {
                             onChanged: (bool? blueValue) {
                               updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
                             },
-                            value: currentColorTheme.blue,
+                            value: MyColorInheritedScheme.of(myHomePageContext).blue,
                             enabledTrackColor: Colors.blue,
                             duration: const Duration(milliseconds: 100),
                           ),

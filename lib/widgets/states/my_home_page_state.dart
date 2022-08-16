@@ -22,24 +22,26 @@ class MyHomePageState extends State<MyHomePage> {
       "Something's happened"//default errorText
   );
 
-  ColorTheme currentColorTheme = ColorTheme(
-    true,
-    true,
-    true,
-  );
-
   @override
   Widget build(BuildContext context) {
 		return MyColorInheritedScheme(
 			red: true,
 			green: true,
 			blue: true,
-			child: Scaffold(
-      	key: scaffoldKey,
-      	appBar: MyAppBar(title: widget.title),
-      	body: MyBody(),
-     		);
-
-			);	
-    }
+			child:Theme(
+				data: ThemeData(
+					primarySwatch: 
+				),
+				child: Builder(
+					builder: (BuildContext myHomePageContext) {
+						return Scaffold(
+      				key: scaffoldKey,
+      				appBar: const MyAppBar(title: widget.title),
+      				body: const MyBody(),
+     					);
+					},
+				),
+			);
+		);	
+  }
 }

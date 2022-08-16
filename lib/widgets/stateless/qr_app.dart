@@ -12,10 +12,13 @@ class QrApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'QR-coder',
+			/*
+			//default theme data I am going to replace by InheritedWidget
       theme: ThemeData(
         primarySwatch: Colors.blue,
         backgroundColor: backgroundColor,
       ),
+			*/
       home: const MyHomePage(title: 'QR-coder'),
     );
   }
