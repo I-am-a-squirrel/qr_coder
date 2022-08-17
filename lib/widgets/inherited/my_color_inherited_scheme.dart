@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//rewrite this file using Bloc State management system
+
 class MyColorInheritedScheme extends InheritedWidget {
 	const MyColorInheritedScheme({
 		Key? key,
