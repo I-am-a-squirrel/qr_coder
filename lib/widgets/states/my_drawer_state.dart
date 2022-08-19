@@ -7,7 +7,7 @@ class MyDrawerState extends State<MyDrawer> {
 	Widget build(BuildContext context) {
 		return GFDrawer(
                     child: ListView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       /*
                       Red color deactivation toggle

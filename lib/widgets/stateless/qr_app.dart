@@ -1,8 +1,11 @@
 //The root app of visual interface
 
 import 'package:flutter/material.dart';
-import '/widgets/stateful/my_home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_coder/classes/my_custom_theme.dart';
 import 'package:qr_coder/global_variables.dart';
+import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
+import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 
 class QrApp extends StatelessWidget {
   const QrApp({Key? key}) : super(key: key);
@@ -19,7 +22,22 @@ class QrApp extends StatelessWidget {
         backgroundColor: backgroundColor,
       ),
 			*/
-      home: const MyHomePage(title: 'QR-coder'),
+			home: BlocProvider(
+				create: (BuildContext themeContext) => ColorSchemeCubit(
+					MyCustomTheme(
+						red: true,
+						green: true,
+						blue: true,
+					),
+				),
+				child: Theme(
+					child: const MyHomePage(title: 'QR-coder'),
+					data: ThemeData(
+						primarySwatch: BlocProvider.of(themeContext).themeColor(Colors.blue),
+						backgroundColor: backgroundColor,
+					),
+				),
+			),
     );
   }
 }

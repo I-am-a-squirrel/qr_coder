@@ -12,22 +12,24 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class MyBodyState extends State<MyBody> {
 	late TextEditingController _qrCodeTextController; //controller of text field
+	late AdvancedDrawerController _advancedDrawerController;
  
   @override
   void initState() {
     super.initState();
+		_advancedDrawerController = AdvancedDrawerController();
     _qrCodeTextController = TextEditingController();
   }
 
   @override
   void dispose() {
     _qrCodeTextController.dispose();
+		_advancedDrawerController.dispose();
     super.dispose();
   }
 
 	Widget build(BuildContext context) {
 		return AdvancedDrawer(
-        key: _advancedDrawerKey,
         drawer: MyDrawer(),
         controller: _advancedDrawerController,
         child: Container(
