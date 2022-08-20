@@ -27,7 +27,7 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 		return Scaffold(
       				key: scaffoldKey,
-      				appBar: const MyAppBar(title: widget.title),
+      				appBar: MyAppBar(title: widget.title),
       				body: const MyBody(),
      					);
   }

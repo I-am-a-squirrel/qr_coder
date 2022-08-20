@@ -3,7 +3,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:qr_coder/widgets/states/my_body_state.dart';
 
 class MyAppBar extends AppBar {
-	const MyAppBar({Key? key, required String title}) {
+	MyAppBar({Key? key, required String title}) {
 		GFAppBar(
     	    //Menu in the AppBar
       	  leading: Builder(
@@ -11,7 +11,7 @@ class MyAppBar extends AppBar {
           	  return GFIconButton(
             	  icon: const Icon(Icons.menu),
              	 onPressed: () {
-              	  _advancedDrawerController.toggleDrawer();
+              	  getAdvancedDrawerController.toggleDrawer();
               	},
         	    );
        	   },

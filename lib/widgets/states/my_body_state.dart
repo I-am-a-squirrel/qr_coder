@@ -12,7 +12,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class MyBodyState extends State<MyBody> {
 	late TextEditingController _qrCodeTextController; //controller of text field
+
 	late AdvancedDrawerController _advancedDrawerController;
+
  
   @override
   void initState() {

@@ -7,7 +7,7 @@ import 'package:qr_coder/classes/my_custom_theme.dart';
 class ColorSchemeCubit extends Cubit<MyCustomTheme> {
 	ColorSchemeCubit(MyCustomTheme initialTheme) : super(initialTheme);
 
-	void toggleRed() => emit(state.changedRed());
-	void toggleGreen() => emit(state.changedGreen());
-	void toggleBlue() => emit(state.changedBlue());
+	void toggleRed() => emit(state.changedRed);
+	void toggleGreen() => emit(state.changedGreen);
+	void toggleBlue() => emit(state.changedBlue);
 }
