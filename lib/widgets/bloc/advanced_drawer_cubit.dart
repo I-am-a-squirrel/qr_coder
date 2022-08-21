@@ -4,8 +4,8 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 //Cubit to manage AdvancedDrawer
 
-class AdvancedDrawerCubit extends Cubit<AdvancedDrawer> {
-	AdvancedDrawerCubit(AdvancedDrawer initialAdvancedDrawerState) : super(initialAdvancedDrawerState);
+class AdvancedDrawerCubit extends Cubit<AdvancedDrawerValue> {
+	AdvancedDrawerCubit(AdvancedDrawerValue initialAdvancedDrawerState) : super(initialAdvancedDrawerState);
 
 	final advancedDrawerController = AdvancedDrawerController();
 }

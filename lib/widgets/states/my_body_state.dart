@@ -6,38 +6,33 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:qr_coder/global_variables.dart';
+import 'package:qr_coder/widgets/states/my_home_page_state.dart';
+import 'package:qr_coder/widgets/bloc/advanced_drawer_cubit.dart';
 import 'package:qr_coder/widgets/getwidgets/my_drawer.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
-import 'package:qr_coder/widgets/states/my_home_page_state.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MyBodyState extends State<MyBody> {
 	late TextEditingController _qrCodeTextController; //controller of text field
+	final AdvancedDrawerController advancedDrawerController = BlocProvider.of<AdvancedDrawerCubit>(advancedDrawerContext).advancedDrawerController;
 
-	late AdvancedDrawerController _advancedDrawerController;
-
- 
   @override
   void initState() {
     super.initState();
-		_advancedDrawerController = AdvancedDrawerController();
     _qrCodeTextController = TextEditingController();
   }
 
   @override
   void dispose() {
     _qrCodeTextController.dispose();
-		_advancedDrawerController.dispose();
     super.dispose();
   }
 
 	Widget build(BuildContext context) {
-		return BlocProvider(
-			create: (BuildContext advancedDrawerContext) => AdvancedDrawerCubit(),
-			child: AdvancedDrawer(
-        drawer: MyDrawer(),
-        controller: BlocProvider.of<AdvancedDrawerCubit>(advancedDrawerController),
-        child: Container(
+		return AdvancedDrawer(
+        drawer: const MyDrawer(),
+        controller: advancedDrawerController,
+			  child: Container(
           color: backgroundColor,
           child: Center(
             child: Column(
@@ -90,7 +85,6 @@ class MyBodyState extends State<MyBody> {
               ),
             ),
          ),
-       )
-		);
+       );
 	}
 }

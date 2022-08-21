@@ -1,10 +1,13 @@
 //State of Home page
 
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:qr_coder/classes/my_qr_code.dart';
+import 'package:qr_coder/widgets/bloc/advanced_drawer_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
-import 'package:qr_coder/widgets/getwidgets/my_app_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 
@@ -25,10 +28,28 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-		return Scaffold(
-      				key: scaffoldKey,
-      				appBar: MyAppBar(title: widget.title),
-      				body: const MyBody(),
-     					);
+		return BlocProvider(
+			create: (BuildContext advancedDrawerContext) => AdvancedDrawerCubit(AdvancedDrawerValue.hidden()),
+			child: Scaffold(
+      					key: scaffoldKey,
+								appBar:GFAppBar(
+    	    				//Menu in the AppBar
+      	  				leading: Builder(
+        	  			builder: (BuildContext context) {
+          	  			return GFIconButton(
+            	  			icon: const Icon(Icons.menu),
+             	 				onPressed: () {
+              	  		advancedDrawerController.toggleDrawer();
+															},
+        	    							);
+       	   								},
+      	  							),
+       	 					title: Text(widget.title),
+      						centerTitle: true,
+     	 					),
+      				  body: const MyBody(),
+     					),
+
+		);
   }
 }

@@ -23,7 +23,8 @@ class QrApp extends StatelessWidget {
       ),
 			*/
 			home: BlocProvider(
-				create: (BuildContext themeContext) => ColorSchemeCubit(
+				//create: (BuildContext themeContext) => ColorSchemeCubit(
+				create: (_) => ColorSchemeCubit(
 					MyCustomTheme(
 						red: true,
 						green: true,
@@ -33,7 +34,8 @@ class QrApp extends StatelessWidget {
 				child: Theme(
 					child: const MyHomePage(title: 'QR-coder'),
 					data: ThemeData(
-						primarySwatch: BlocProvider.of(themeContext).themeColor(Colors.blue),
+						//primarySwatch: BlocProvider.of(themeContext).themeColor(Colors.blue),
+						primarySwatch: BlocProvider.of<ColorSchemeCubit>(context).themeColor(Colors.blue),
 						backgroundColor: backgroundColor,
 					),
 				),
