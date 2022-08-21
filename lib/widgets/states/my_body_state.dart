@@ -3,6 +3,7 @@ import 'dart:math' show min;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:qr_coder/global_variables.dart';
 import 'package:qr_coder/widgets/getwidgets/my_drawer.dart';
@@ -31,9 +32,11 @@ class MyBodyState extends State<MyBody> {
   }
 
 	Widget build(BuildContext context) {
-		return AdvancedDrawer(
+		return BlocProvider(
+			create: (BuildContext advancedDrawerContext) => AdvancedDrawerCubit(),
+			child: AdvancedDrawer(
         drawer: MyDrawer(),
-        controller: _advancedDrawerController,
+        controller: BlocProvider.of<AdvancedDrawerCubit>(advancedDrawerController),
         child: Container(
           color: backgroundColor,
           child: Center(
@@ -87,6 +90,7 @@ class MyBodyState extends State<MyBody> {
               ),
             ),
          ),
-       );
+       )
+		);
 	}
 }
