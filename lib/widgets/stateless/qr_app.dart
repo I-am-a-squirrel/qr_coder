@@ -13,33 +13,9 @@ class QrApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'QR-coder',
-			/*
-			//default theme data I am going to replace by InheritedWidget
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        backgroundColor: backgroundColor,
-      ),
-			*/
-			home: BlocProvider(
-				//create: (BuildContext themeContext) => ColorSchemeCubit(
-				create: (_) => ColorSchemeCubit(
-					MyCustomTheme(
-						red: true,
-						green: true,
-						blue: true,
-					),
-				),
-				child: Theme(
-					child: const MyHomePage(title: 'QR-coder'),
-					data: ThemeData(
-						//primarySwatch: BlocProvider.of(themeContext).themeColor(Colors.blue),
-						primarySwatch: BlocProvider.of<ColorSchemeCubit>(context).themeColor(Colors.blue),
-						backgroundColor: backgroundColor,
-					),
-				),
-			),
+			home: const MyHomePage(title: 'QR-coder'),
     );
   }
 }
