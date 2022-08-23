@@ -1,5 +1,3 @@
-//Home page
-
 import 'package:flutter/material.dart';
 import 'package:qr_coder/widgets/states/my_home_page_state.dart';
 

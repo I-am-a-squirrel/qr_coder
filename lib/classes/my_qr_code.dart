@@ -28,6 +28,6 @@ class MyQrCode {
       this.errorWidgetHeight,
       this.errorWidgetWidth,
       this.errorText,
-    );
-  }
+  );
+}
 

@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:qr_coder/classes/my_custom_theme.dart';
 import 'package:qr_coder/classes/my_qr_code.dart';
+import 'package:qr_coder/global_variables.dart';
 import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
+import 'package:qr_coder/widgets/stateful/my_body.dart';
 import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 
 class MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>(); //key for current status of Scaffold
   late TextEditingController _qrCodeTextController; //controller of text field
 	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
 
@@ -44,14 +46,21 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 		return BlocProvider(
 			create: (_) => ColorSchemeCubit(
-				initialTheme: MyCustomTheme(
+				MyCustomTheme(
 					red: true,
-					green: true:
+					green: true,
 					blue: true,
-				)
+				),
 			),
-			child: Scaffold(
-      					key: scaffoldKey,
+			child: BlocBuilder<ColorSchemeCubit, MyCustomTheme>(
+				builder: (_, state) {
+					return Theme(
+						data: ThemeData(
+							primaryColor: state.themeColor(
+								Colors.blue,
+							),
+						),
+						child:Scaffold(
 								appBar:GFAppBar(
     	    				//Menu in the AppBar
       	  				leading: Builder(
@@ -80,9 +89,9 @@ class MyHomePageState extends State<MyHomePage> {
                           padding: EdgeInsets.all(10.0),//free space around
                           child: GFToggle(
                             onChanged: (bool? redValue) {
-															MyColorInheritedScheme.updateScheme(redValue, _, _);	
+															context.read<ColorSchemeCubit>().toggleRed();	
 														},
-                            value: MyColorInheritedScheme.of(myHomePageContext).red,
+                            value: state.red,
                             enabledTrackColor: Colors.red,
                             duration: const Duration(milliseconds: 100),
                           ),
@@ -98,9 +107,9 @@ class MyHomePageState extends State<MyHomePage> {
                           padding: EdgeInsets.all(10.0),//free space around
                           child: GFToggle(
                             onChanged: (bool? greenValue) {
-                              updateColorTheme(currentColorTheme.red, greenValue as bool, currentColorTheme.blue);
+                             context.read<ColorSchemeCubit>().toggleGreen(); 
                             },
-                            value: MyColorInheritedScheme.of(myHomePageContext).green,
+                            value: state.green,
                             enabledTrackColor: Colors.green,
                             duration: const Duration(milliseconds: 100),
                           ),
@@ -116,9 +125,9 @@ class MyHomePageState extends State<MyHomePage> {
                           padding: EdgeInsets.all(10.0),//free space around
                           child: GFToggle(
                             onChanged: (bool? blueValue) {
-                              updateColorTheme(currentColorTheme.red, currentColorTheme.green, blueValue as bool);
+                              context.read<ColorSchemeCubit>().toggleBlue();
                             },
-                            value: MyColorInheritedScheme.of(myHomePageContext).blue,
+                            value: state.blue,
                             enabledTrackColor: Colors.blue,
                             duration: const Duration(milliseconds: 100),
                           ),
@@ -130,61 +139,12 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
       				  controller: advancedDrawerController,
-			  				child: Container(
-          				color: backgroundColor,
-          				child: Center(
-          					child: Column(
-            					mainAxisAlignment: MainAxisAlignment.center,
-              				children: <Widget>[
-    	          			/*
-      	        			Widget generating QR-code
-          	      		*/
-												QrImage(
-                					data: currentQrCode.textForQrCode,//QR-code message
-                					version: currentQrCode.version,//QR-code version
-													errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
-      	          				//Get the optimal size for QR-code based on context
-                  				size: 0.8 * min(
-        	          				MediaQuery.of(context).size.width,//Width of the context
-          	        				MediaQuery.of(context).size.height//Height of the context
-            	    				),
-	                				backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
-    	              			foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
-      	            			errorStateBuilder: (cxt, err) {
-        	          				return currentQrCode.errorStateBuilder();//Error widget generating
-          	        			},
-            	    			),
-                  			GFTextField(
-      	            			controller: _qrCodeTextController,
-        	          			//TextField look
-        	          			decoration: InputDecoration(
-            	          		hintText: "Input your text",
-              	      			constraints: BoxConstraints.expand(
-      	                			width: MediaQuery.of(context).size.width * 0.8,
-        	              			height: 20,
-          	          			),
-            	      			),
-            	      			onChanged: (String localStringForQrCode) async {
-              	      			currentQrCode.textForQrCode = localStringForQrCode;//updating QR-code string
-                	  			},
-    	            			),
-    	            			//Update button
-      	          			GFButton(
-          	        			onPressed: () {
-            	        			updateQrCode(
-              	        			currentQrCode.textForQrCode,
-              	        			MediaQuery.of(context).size.height,
-        	              			MediaQuery.of(context).size.width,
-                      			);
-          	        			},
-            	      			child: const Text('Update'),
-    	            			),
-      	        			],
-  	          			),
-      	      		),
-        	 			),
+			  				child: MyBody(),
     	   			),
      				),
+					);
+				},
+			),
 		);
   }
 }
