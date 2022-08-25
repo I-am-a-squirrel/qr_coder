@@ -13,9 +13,22 @@ import 'package:qr_flutter/qr_flutter.dart';
 class MyBodyState extends State<MyBody> {
 late TextEditingController _qrCodeTextController; //controller of text field
 
+	@override
+	void initState() {
+		super.initState();
+		_qrCodeTextController = TextEditingController();
+	}
+
+	@override
+	void dispose() {
+		_qrCodeTextController.dispose();
+		super.dispose();
+	}
+
+	@override
 	Widget build(BuildContext context) {
 		return BlocProvider(
-			create: (_) => MyQrCodeCubit(
+			create: (context) => MyQrCodeCubit(
 				MyQrCode(
       		"Fuck all wars! Хуй всем войнам! 1921",//default textForQrCode
       		7,//default version
@@ -28,7 +41,7 @@ late TextEditingController _qrCodeTextController; //controller of text field
   			)
 			),
 			child: BlocBuilder<MyQrCodeCubit, MyQrCode>(
-				builder: (_, state) {
+				builder: (context, state) {
 					return Container(
           				color: backgroundColor,
           				child: Center(

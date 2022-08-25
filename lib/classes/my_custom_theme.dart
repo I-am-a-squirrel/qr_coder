@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 
 class MyCustomTheme {
 
-	late final bool red;
-	late final bool green;
-	late final bool blue;
-
 	MyCustomTheme({
 		Key? key,
-		required bool red,
-		required bool green,
-		required bool blue,
+		required bool this.red,
+		required bool this.green,
+		required bool this.blue,
 	});
 
+	final bool red;
+	final bool green;
+	final bool blue;
 //Make my Color calculations smarter
 	Color themeColor(Color defaultColor) {
     int intRed = red ? 255 : 0;
@@ -25,7 +24,7 @@ class MyCustomTheme {
       return defaultColor; //Default preferences
     }else{
       return Color.fromARGB(255, intRed, intGreen, intBlue); //Customized preferences
-    };
+    }
   }
 
 //Returns a new theme with reversed red parameter

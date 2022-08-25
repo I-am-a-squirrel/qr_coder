@@ -9,13 +9,13 @@ class MyQrCodeCubit extends Cubit<MyQrCode> {
 	void updateData(String newData) => emit(
 																				MyQrCode(
 																					newData,
-																					initialQrCode.version,
-																					initialQrCode.errorCorrectionLevel,
-																					initialQrCode.backgroundColor,
-																					initialQrCode.foregroundColor,
-																					initialQrCode.errorWidgetHeight,
-																					initialQrCode.errorWidgetWidth,
-																					initialQrCode.errorText,
+																					state.version,
+																					state.errorCorrectionLevel,
+																					state.backgroundColor,
+																					state.foregroundColor,
+																					state.errorWidgetHeight,
+																					state.errorWidgetWidth,
+																					state.errorText,
 																				)
 																			);
 }

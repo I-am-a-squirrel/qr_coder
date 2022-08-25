@@ -1,5 +1,3 @@
-import 'dart:math' show min;
-
 import 'package:icons_launcher/constants.dart';
 import 'package:icons_launcher/custom_exceptions.dart';
 import 'package:icons_launcher/main.dart';
