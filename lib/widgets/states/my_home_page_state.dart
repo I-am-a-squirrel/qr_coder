@@ -33,7 +33,7 @@ class MyHomePageState extends State<MyHomePage> {
 						child:Scaffold(
 								appBar:GFAppBar(
     	    				//Menu in the AppBar
-													leading: GFIconButton(
+													leading: IconButton(
             	  									icon: const Icon(Icons.menu),
              	 										onPressed: () {
               	  									advancedDrawerController.toggleDrawer();
