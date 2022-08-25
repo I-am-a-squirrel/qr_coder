@@ -1,9 +1,12 @@
 //State for QR-code ecosystem
 import 'dart:math' show min;
 
+import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_coder/classes/my_qr_code.dart';
 import 'package:qr_coder/global_variables.dart';
+import 'package:qr_coder/widgets/bloc/my_qr_code_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -24,7 +27,9 @@ late TextEditingController _qrCodeTextController; //controller of text field
       		"Something's happened"//default errorText
   			)
 			),
-			child: Container(
+			child: BlocBuilder<MyQrCodeCubit, MyQrCode>(
+				builder: (_, state) {
+					return Container(
           				color: backgroundColor,
           				child: Center(
           					child: Column(
@@ -34,18 +39,18 @@ late TextEditingController _qrCodeTextController; //controller of text field
       	        			Widget generating QR-code
           	      		*/
 												QrImage(
-                					data: currentQrCode.textForQrCode,//QR-code message
-                					version: currentQrCode.version,//QR-code version
-													errorCorrectionLevel: currentQrCode.errorCorrectionLevel,//Correction level
+                					data: state.textForQrCode,//QR-code message
+                					version: state.version,//QR-code version
+													errorCorrectionLevel: state.errorCorrectionLevel,//Correction level
       	          				//Get the optimal size for QR-code based on context
                   				size: 0.8 * min(
         	          				MediaQuery.of(context).size.width,//Width of the context
           	        				MediaQuery.of(context).size.height//Height of the context
             	    				),
-	                				backgroundColor: currentQrCode.backgroundColor,//Background color of this QR-code
-    	              			foregroundColor: currentQrCode.foregroundColor,//Foreground color of this QR-code
+	                				backgroundColor: state.backgroundColor,//Background color of this QR-code
+    	              			foregroundColor: state.foregroundColor,//Foreground color of this QR-code
       	            			errorStateBuilder: (cxt, err) {
-        	          				return currentQrCode.errorStateBuilder();//Error widget generating
+        	          				return state.errorStateBuilder();//Error widget generating
           	        			},
             	    			),
                   			GFTextField(
@@ -62,21 +67,12 @@ late TextEditingController _qrCodeTextController; //controller of text field
               	      			context.read<MyQrCodeCubit>().updateData(localStringForQrCode);//updating QR-code string
                 	  			},
     	            			),
-    	            			//Update button
-      	          			GFButton(
-          	        			onPressed: () {
-            	        			updateQrCode(
-              	        			currentQrCode.textForQrCode,
-              	        			MediaQuery.of(context).size.height,
-        	              			MediaQuery.of(context).size.width,
-                      			);
-          	        			},
-            	      			child: const Text('Update'),
-    	            			),
       	        			],
   	          			),
       	      		),
-        	 			),
+        	 			);
+				}
+			),
 		);
 	}
 }
