@@ -1,3 +1,9 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
+
 import 'package:icons_launcher/constants.dart';
 import 'package:icons_launcher/custom_exceptions.dart';
 import 'package:icons_launcher/main.dart';
@@ -6,8 +12,12 @@ import 'package:icons_launcher/xml_templates.dart';
 
 import 'package:flutter/material.dart';
 
-import '/widgets/stateless/qr_app.dart';
+import 'package:qr_coder/classes/my_custom_theme.dart';
+import 'package:qr_coder/widgets/stateless/qr_app.dart';
 
-void main() {
+void main() async {
+	WidgetsFlutterBinding.ensureInitialized();
+	Hive.init(Directory.current.path + '/my.db');
+  await Hive.openBox<MyCustomTheme>('myThemeBox');
   runApp(const QrApp());
 }

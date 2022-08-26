@@ -8,11 +8,10 @@ import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
 import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 
-
 class MyHomePageState extends State<MyHomePage> {
 	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
 
-  @override
+	@override
   Widget build(BuildContext context) {
 		return BlocProvider(
 			create: (context) => ColorSchemeCubit(
@@ -20,7 +19,7 @@ class MyHomePageState extends State<MyHomePage> {
 					red: true,
 					green: true,
 					blue: true,
-				),
+				)
 			),
 			child: BlocBuilder<ColorSchemeCubit, MyCustomTheme>(
 				builder: (context, state) {
@@ -73,7 +72,7 @@ class MyHomePageState extends State<MyHomePage> {
                           padding: const EdgeInsets.all(10.0),//free space around
                           child: GFToggle(
                             onChanged: (bool? greenValue) {
-                             context.read<ColorSchemeCubit>().toggleGreen(); 
+															context.read<ColorSchemeCubit>().toggleGreen();
                             },
                             value: state.green,
                             enabledTrackColor: Colors.green,
