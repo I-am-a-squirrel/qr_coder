@@ -30,14 +30,14 @@ late TextEditingController _qrCodeTextController; //controller of text field
 		return BlocProvider(
 			create: (context) => MyQrCodeCubit(
 				MyQrCode(
-      		"Fuck all wars! Хуй всем войнам! 1921",//default textForQrCode
-      		7,//default version
-      		QrErrorCorrectLevel.H,//default errorCorrectLevel
-      		Colors.white,//default backgroundColor
-      		Colors.black,//default foregroundColor
-      		MediaQuery.of(context).size.height,//default errorWidgetHeight
-      		MediaQuery.of(context).size.width,//default errorWidgetWidth
-      		"Something's happened"//default errorText
+      		textForQrCode: "Fuck all wars! Хуй всем войнам! 1921",//default textForQrCode
+      		version: 7,//default version
+      		errorCorrectionLevel: QrErrorCorrectLevel.H,//default errorCorrectLevel
+      		backgroundColor: Colors.white,//default backgroundColor
+      		foregroundColor: Colors.black,//default foregroundColor
+      		errorWidgetHeight: MediaQuery.of(context).size.height,//default errorWidgetHeight
+      		errorWidgetWidth: MediaQuery.of(context).size.width,//default errorWidgetWidth
+      		errorText: "Something's happened"//default errorText
   			)
 			),
 			child: BlocBuilder<MyQrCodeCubit, MyQrCode>(
@@ -52,16 +52,16 @@ late TextEditingController _qrCodeTextController; //controller of text field
       	        			Widget generating QR-code
           	      		*/
 												QrImage(
-                					data: state.textForQrCode,//QR-code message
-                					version: state.version,//QR-code version
-													errorCorrectionLevel: state.errorCorrectionLevel,//Correction level
+                					data: state.textForQrCode as String,//QR-code message
+                					version: state.version as int,//QR-code version
+													errorCorrectionLevel: state.errorCorrectionLevel as int,//Correction level
       	          				//Get the optimal size for QR-code based on context
                   				size: 0.8 * min(
         	          				MediaQuery.of(context).size.width,//Width of the context
           	        				MediaQuery.of(context).size.height//Height of the context
             	    				),
-	                				backgroundColor: state.backgroundColor,//Background color of this QR-code
-    	              			foregroundColor: state.foregroundColor,//Foreground color of this QR-code
+	                				backgroundColor: state.backgroundColor as Color,//Background color of this QR-code
+    	              			foregroundColor: state.foregroundColor as Color,//Foreground color of this QR-code
       	            			errorStateBuilder: (cxt, err) {
         	          				return state.errorStateBuilder();//Error widget generating
           	        			},
