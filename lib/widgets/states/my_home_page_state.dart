@@ -4,7 +4,6 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:qr_coder/classes/my_custom_theme.dart';
-import 'package:qr_coder/main.dart';
 import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
 import 'package:qr_coder/widgets/stateful/my_home_page.dart';
