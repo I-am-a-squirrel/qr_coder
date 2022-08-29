@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 //Theme data
 
-part 'my_custom_theme.g.dart';
-
-@HiveType(typeId: 1)
 class MyCustomTheme {
 
 	MyCustomTheme({
@@ -14,13 +10,10 @@ class MyCustomTheme {
 		required bool this.blue,
 	});
 
-	@HiveField(0)
 	final bool red;
 
-	@HiveField(1)
 	final bool green;
 
-	@HiveField(2)
 	final bool blue;
 
 //Make my Color calculations smarter
