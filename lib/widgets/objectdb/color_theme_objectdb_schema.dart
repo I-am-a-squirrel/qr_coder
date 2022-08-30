@@ -8,5 +8,5 @@ class ColorThemeObjectdbSchema extends Schema {
 	ColorThemeObjectdbSchema(this.themeObject);
 
 	@override
-	Map toMap
+	Map toMap()=> {'themeObject' : themeObject};
 }
