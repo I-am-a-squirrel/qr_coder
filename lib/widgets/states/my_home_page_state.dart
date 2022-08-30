@@ -1,8 +1,13 @@
 //State of Home page
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:objectdb/objectdb.dart';
+import 'package:objectdb/src/objectdb_storage_filesystem.dart';
+import 'package:objectdb/src/objectdb_storage_indexeddb.dart';
 import 'package:qr_coder/classes/my_custom_theme.dart';
 import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
@@ -10,6 +15,14 @@ import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 
 class MyHomePageState extends State<MyHomePage> {
 	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
+	
+	if (Platform.isAndroid || Platform.isLinux) {
+		storage = FileSystemStorage();
+	}
+
+	if (Platform.isWeb) {
+		storage = IndexedDBStorage(dbName);
+	}
 
 	@override
   Widget build(BuildContext context) {

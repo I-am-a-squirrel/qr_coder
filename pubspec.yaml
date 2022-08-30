@@ -41,9 +41,6 @@ dependencies:
   icons_launcher: ^1.2.1
   flutter_bloc: ^8.1.1
   bloc_test: ^9.1.0
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  hive_generator: ^1.1.3
   objectdb: ^1.2.1+1
 
 flutter_icons:

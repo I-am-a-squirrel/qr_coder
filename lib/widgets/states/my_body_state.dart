@@ -11,7 +11,7 @@ import 'package:qr_coder/widgets/stateful/my_body.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MyBodyState extends State<MyBody> {
-late TextEditingController _qrCodeTextController; //controller of text field
+	late TextEditingController _qrCodeTextController; //controller of text field
 
 	@override
 	void initState() {
