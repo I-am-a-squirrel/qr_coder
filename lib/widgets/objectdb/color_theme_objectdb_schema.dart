@@ -7,7 +7,8 @@ class ColorThemeObjectdbSchema extends Schema {
 
 	ColorThemeObjectdbSchema(this.themeObject);
 
-	MyCustomTheme fromTheme(Map theme) => theme['theme'];
+	static ColorThemeObjectdbSchema fromMap(Map themeMap) => ColorThemeObjectdbSchema(themeMap['theme']);
+
 	@override
 	Map toMap() => {'themeObject' : themeObject};
 }

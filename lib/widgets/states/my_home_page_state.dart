@@ -15,16 +15,7 @@ import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 
 class MyHomePageState extends State<MyHomePage> {
 	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
-	
-	if (Platform.isAndroid || Platform.isLinux) {
-		storage = FileSystemStorage();
-	}
 
-	if (Platform.isWeb) {
-		storage = IndexedDBStorage(dbName);
-	}
-
-	@override
   Widget build(BuildContext context) {
 		return BlocProvider(
 			create: (context) => ColorSchemeCubit(),
