@@ -53,17 +53,17 @@ class ColorSchemeCubit extends Cubit<MyCustomTheme> {
 		var result = db.find({
 			'themeObject': regexAll
 		});
-		result.then((List<MyColorTheme> resultList) {
-			return resultList.isEmpty;
+		result.then((ColorThemeObjectdbSchema resultSchema) {
+			return resultSchema.toMap().isEmpty;
 		});
 	}
 
-	static Future<MyCustomTheme> themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
+	static MyCustomTheme themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
 		var result = db.first({
 			'themeObject': regexAll
 		});
-		result.then((MyCustomTheme theme) {
-			return theme;
+		result.then((ColorThemeObjectdbSchema theme) {
+			return theme.toMap()['themeObject'];
 		});
 	}
 
