@@ -50,26 +50,21 @@ class ColorSchemeCubit extends Cubit<MyCustomTheme> {
 	}
 
 	static bool isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
-		return FutureBuilder<List?>(
-			future: db.find({
-				'themeObject': regexAll
-			}),
-			builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-				return snapshot.data.isEmpty;
-			},
-		);
+		var result = db.find({
+			'themeObject': regexAll
+		});
+		result.then((List<MyColorTheme> resultList) {
+			return resultList.isEmpty;
+		});
 	}
 
 	static Future<MyCustomTheme> themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
-		return FutureBuilder<MyCustomTheme>(
-			future: db.first({
-				'themeObject': regexAll
-			}),
-			builder: (BuildContext context, AsyncSnapshot<MyCustomTheme> snapshot) {
-				return snapshot.data;
-			},
-		);
-
+		var result = db.first({
+			'themeObject': regexAll
+		});
+		result.then((MyCustomTheme theme) {
+			return theme;
+		});
 	}
 
 	void toggleRed() {
