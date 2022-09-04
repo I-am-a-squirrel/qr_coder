@@ -12,29 +12,35 @@ import 'package:qr_coder/classes/my_custom_theme.dart';
 import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
 import 'package:qr_coder/widgets/stateful/my_home_page.dart';
+import 'package:qr_coder/widgets/objectdb/color_theme_objectdb_schema.dart';
 
 class MyHomePageState extends State<MyHomePage> {
 
+	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
 	MyCustomTheme? defaultTheme;
 	
 	final regexAll = RegExp(RegExp.escape(''), caseSensitive: false);
-
+	
 	bool isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
 		var result = db.find({
 			'themeObject': regexAll
 		});
-		result.then((ColorThemeObjectdbSchema resultSchema) {
-			return resultSchema.toMap().isEmpty;
+		bool? resultBool;
+		result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
+			resultBool = resultSchemaList.isEmpty;
 		});
+		return resultBool!;
 	}
 
 	MyCustomTheme themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
 		var result = db.first({
 			'themeObject': regexAll
 		});
+		MyCustomTheme? resultTheme;
 		result.then((ColorThemeObjectdbSchema theme) {
-			return theme.toMap()['themeObject'];
+			resultTheme = theme.toMap()['themeObject'];
 		});
+		return resultTheme!;
 	}
 
 	void initTheme(db) {
@@ -52,10 +58,8 @@ class MyHomePageState extends State<MyHomePage> {
 	@override
 	void initState() {
 		super.initState();
-		final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
-		final Platform userDevice = Platform();
-		final path = (userDevice.isAndroid || userDevice.isLinux) ? (Directory.current.path + '/theme.db') : '';
-		final storage = path == '' ? IndexedDBStorage('theme') : FyleSystemStorage(path);
+		final path = (Platform.isAndroid || Platform.isLinux) ? (Directory.current.path + '/theme.db') : '';
+		final storage = path == '' ? IndexedDBStorage('theme') : FileSystemStorage(path);
 		final db = SchemaDB<ColorThemeObjectdbSchema> (
 			storage,
 			(themeMap) => ColorThemeObjectdbSchema.fromMap(themeMap),
@@ -65,12 +69,14 @@ class MyHomePageState extends State<MyHomePage> {
 
 	@override
 	void dispose() {
+		db.cleanup();
+		db.insert({'themeObject': defaultTheme});
 		super.dispose();
 	}
 
   Widget build(BuildContext context) {
 		return BlocProvider(
-			create: (context) => ColorSchemeCubit(defaultTheme),
+			create: (context) => ColorSchemeCubit(defaultTheme!),
 			child: BlocBuilder<ColorSchemeCubit, MyCustomTheme>(
 				builder: (context, state) {
 					return Theme(
