@@ -2,12 +2,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:objectdb/objectdb.dart';
-import 'package:objectdb/src/objectdb_storage_filesystem.dart';
-import 'package:objectdb/src/objectdb_storage_indexeddb.dart';
 import 'package:qr_coder/classes/my_custom_theme.dart';
 import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
@@ -18,6 +17,7 @@ class MyHomePageState extends State<MyHomePage> {
 
 	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
 	MyCustomTheme? defaultTheme;
+	SchemaDB<ColorThemeObjectdbSchema>? db;
 	
 	final regexAll = RegExp(RegExp.escape(''), caseSensitive: false);
 	
@@ -69,8 +69,8 @@ class MyHomePageState extends State<MyHomePage> {
 
 	@override
 	void dispose() {
-		db.cleanup();
-		db.insert({'themeObject': defaultTheme});
+		db!.cleanup();
+		db!.insert(ColorThemeObjectdbSchema.fromMap({'themeObject': defaultTheme!}));
 		super.dispose();
 	}
 
