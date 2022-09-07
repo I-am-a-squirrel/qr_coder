@@ -2,11 +2,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:objectdb/objectdb.dart';
+import 'package:qr_coder/classes/abstract_database_interface.dart';
 import 'package:qr_coder/classes/my_custom_theme.dart';
 import 'package:qr_coder/widgets/bloc/color_scheme_cubit.dart';
 import 'package:qr_coder/widgets/stateful/my_body.dart';
@@ -14,11 +14,9 @@ import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 import 'package:qr_coder/widgets/objectdb/color_theme_objectdb_schema.dart';
 
 class MyHomePageState extends State<MyHomePage> {
-
 	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
 	MyCustomTheme? defaultTheme;
 	SchemaDB<ColorThemeObjectdbSchema>? db;
-	
 	final regexAll = RegExp(RegExp.escape(''), caseSensitive: false);
 	
 	bool isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
@@ -58,10 +56,8 @@ class MyHomePageState extends State<MyHomePage> {
 	@override
 	void initState() {
 		super.initState();
-		final path = (Platform.isAndroid || Platform.isLinux) ? (Directory.current.path + '/theme.db') : '';
-		final storage = path == '' ? IndexedDBStorage('theme') : FileSystemStorage(path);
 		final db = SchemaDB<ColorThemeObjectdbSchema> (
-			storage,
+			DatabaseInterface.storage(),
 			(themeMap) => ColorThemeObjectdbSchema.fromMap(themeMap),
 		);
 		initTheme(db);
