@@ -23,22 +23,22 @@ class MyHomePageState extends State<MyHomePage> {
 		var result = db.find({
 			'themeObject': regexAll
 		});
-		bool? resultBool;
+		late bool resultBool;
 		result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
 			resultBool = resultSchemaList.isEmpty;
+			return resultBool;
 		});
-		return resultBool!;
 	}
 
 	MyCustomTheme themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
 		var result = db.first({
 			'themeObject': regexAll
 		});
-		MyCustomTheme? resultTheme;
+		late MyCustomTheme resultTheme;
 		result.then((ColorThemeObjectdbSchema theme) {
 			resultTheme = theme.toMap()['themeObject'];
+			return resultTheme;
 		});
-		return resultTheme!;
 	}
 
 	void initTheme(db) {
