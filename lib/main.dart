@@ -9,6 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:qr_coder/classes/my_custom_theme.dart';
 import 'package:qr_coder/widgets/stateless/qr_app.dart';
 
-void main() async {
+void main() {
   runApp(const QrApp());
 }

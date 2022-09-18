@@ -20,25 +20,31 @@ class MyHomePageState extends State<MyHomePage> {
 	final regexAll = RegExp(RegExp.escape(''), caseSensitive: false);
 	
 	bool isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
-		var result = db.find({
-			'themeObject': regexAll
-		});
-		late bool resultBool;
-		result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
-			resultBool = resultSchemaList.isEmpty;
-			return resultBool;
-		});
+          try {
+               var result = db.find({
+                    'themeObject': regexAll
+               });
+               result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
+                    return resultSchemaList.isEmpty;
+               });
+          } on emptinessDBError catch (e, s) {
+               print('Exception details:\n $e');
+               print('Stack trace:\n $s');
+          }
 	}
 
 	MyCustomTheme themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
-		var result = db.first({
-			'themeObject': regexAll
-		});
-		late MyCustomTheme resultTheme;
-		result.then((ColorThemeObjectdbSchema theme) {
-			resultTheme = theme.toMap()['themeObject'];
-			return resultTheme;
-		});
+          try {
+               var result = db.first({
+                    'themeObject': regexAll
+               });
+               result.then((ColorThemeObjectdbSchema resultTheme) {
+                    return resultTheme.toMap()['themeObject'];
+               });
+          } on getDBThemeError catch (e, s) {
+               print('Exception details:\n $e');
+               print('Stack trace:\n $s');
+          }
 	}
 
 	void initTheme(db) {
@@ -82,86 +88,86 @@ class MyHomePageState extends State<MyHomePage> {
 							),
 						),
 						child:Scaffold(
-								appBar:GFAppBar(
-    	    				//Menu in the AppBar
-													leading: IconButton(
-            	  									icon: const Icon(Icons.menu),
-             	 										onPressed: () {
-              	  									advancedDrawerController.toggleDrawer();
-																	},
+						     appBar:GFAppBar(
+    	    				          //Menu in the AppBar
+							     leading: IconButton(
+            	  					     icon: const Icon(Icons.menu),
+             	 						onPressed: () {
+              	  						     advancedDrawerController.toggleDrawer();
+												},
         	    									),
-       	 									title: Text(widget.title),
-      										centerTitle: true,
-     	 									),
-      				  body:AdvancedDrawer(
-									drawer: GFDrawer(
-                    child: ListView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      /*
-                      Red color deactivation toggle
-                      */
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),//free space around
-                          child: GFToggle(
-                            onChanged: (bool? redValue) {
+       	 						title: Text(widget.title),
+      							centerTitle: true,
+     	 								),
+      			               body:AdvancedDrawer(
+								drawer: GFDrawer(
+                                             child: ListView(
+                                                  physics: const NeverScrollableScrollPhysics(),
+                                                  children: [
+                                                  /*
+                                                  Red color deactivation toggle
+                                                  */
+                                                       Center(
+                                                            child: Padding(
+                                                                 padding: const EdgeInsets.all(10.0),//free space around
+                                                                 child: GFToggle(
+                                                                      onChanged: (bool? redValue) {
 															context.read<ColorSchemeCubit>().toggleRed();	
 														},
-                            value: state.red,
-                            enabledTrackColor: Colors.red,
-                            duration: const Duration(milliseconds: 100),
-                          ),
-                        ),
-                      ),
+                                                                      value: state.red,
+                                                                      enabledTrackColor: Colors.red,
+                                                                      duration: const Duration(milliseconds: 100),
+                                                                      ),
+                                                                 ),
+                                                            ),
                       
-                      const Divider(),
-                      /*
-                      Green color deactivation toggle
-                      */
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),//free space around
-                          child: GFToggle(
-                            onChanged: (bool? greenValue) {
-															context.read<ColorSchemeCubit>().toggleGreen();
-                            },
-                            value: state.green,
-                            enabledTrackColor: Colors.green,
-                            duration: const Duration(milliseconds: 100),
-                          ),
-                        ),
-                      ),
+                                                  const Divider(),
+                                                  /*
+                                                  Green color deactivation toggle
+                                                  */
+                                                  Center(
+                                                       child: Padding(
+                                                            padding: const EdgeInsets.all(10.0),//free space around
+                                                            child: GFToggle(
+                                                                 onChanged: (bool? greenValue) {
+														context.read<ColorSchemeCubit>().toggleGreen();
+                                                                 },
+                                                                 value: state.green,
+                                                                 enabledTrackColor: Colors.green,
+                                                                 duration: const Duration(milliseconds: 100),
+                                                                 ),
+                                                            ),
+                                                       ),
 
-                      const Divider(),
-                      /*
-                      Blue color deactivation toggle
-                      */
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),//free space around
-                          child: GFToggle(
-                            onChanged: (bool? blueValue) {
-                              context.read<ColorSchemeCubit>().toggleBlue();
-                            },
-                            value: state.blue,
-                            enabledTrackColor: Colors.blue,
-                            duration: const Duration(milliseconds: 100),
-                          ),
-                        ),
-                      ),
+                                                  const Divider(),
+                                                  /*
+                                                  Blue color deactivation toggle
+                                                  */
+                                                  Center(
+                                                       child: Padding(
+                                                            padding: const EdgeInsets.all(10.0),//free space around
+                                                            child: GFToggle(
+                                                            onChanged: (bool? blueValue) {
+                                                                 context.read<ColorSchemeCubit>().toggleBlue();
+                                                            },
+                                                            value: state.blue,
+                                                            enabledTrackColor: Colors.blue,
+                                                            duration: const Duration(milliseconds: 100),
+                                                                           ),
+                                                                      ),
+                                                                 ),
 
-                      const Divider(),
-                    ],
-                  ),
-                ),
-      				  controller: advancedDrawerController,
-			  				child: const MyBody(),
-    	   			),
-     				),
-					);
-				},
-			),
-		);
-  }
+                                                  const Divider(),
+                                             ],
+                                        ),
+                                   ),
+      				     controller: advancedDrawerController,
+			  			child: const MyBody(),
+    	   			     ),
+     			),
+				);
+			},
+		),
+     );
+}
 }
