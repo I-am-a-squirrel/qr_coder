@@ -1,5 +1,5 @@
 //State of Home page
-import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -14,58 +14,47 @@ import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 import 'package:qr_coder/widgets/objectdb/color_theme_objectdb_schema.dart';
 
 class MyHomePageState extends State<MyHomePage> {
-	final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
-	MyCustomTheme? defaultTheme;
-	SchemaDB<ColorThemeObjectdbSchema>? db;
+	final db = SchemaDB<ColorThemeObjectdbSchema> (
+	     DatabaseInterface.storage(),
+		(themeMap) => ColorThemeObjectdbSchema.fromMap(themeMap),
+	);
+     final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
+	late MyCustomTheme defaultTheme;
 	final regexAll = RegExp(RegExp.escape(''), caseSensitive: false);
 	
-	bool isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
-          try {
+	Future<bool> isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
                var result = db.find({
                     'themeObject': regexAll
                });
-               result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
+               return result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
                     return resultSchemaList.isEmpty;
                });
-          } on emptinessDBError catch (e, s) {
-               print('Exception details:\n $e');
-               print('Stack trace:\n $s');
-          }
 	}
 
-	MyCustomTheme themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
-          try {
+	Future<MyCustomTheme> themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
                var result = db.first({
                     'themeObject': regexAll
                });
-               result.then((ColorThemeObjectdbSchema resultTheme) {
+               return result.then((ColorThemeObjectdbSchema resultTheme) {
                     return resultTheme.toMap()['themeObject'];
                });
-          } on getDBThemeError catch (e, s) {
-               print('Exception details:\n $e');
-               print('Stack trace:\n $s');
-          }
 	}
 
-	void initTheme(db) {
-		if(isDbEmpty(db)) {
+	void initTheme(db) async {
+		if(await isDbEmpty(db)) {
 			defaultTheme = MyCustomTheme(
 				red: true,
 				green: true,
 				blue: true,
 			);
 		}else{
-			defaultTheme = themeFromDB(db);
+			defaultTheme = await themeFromDB(db);
 		}
 	}
 
 	@override
 	void initState() {
 		super.initState();
-		final db = SchemaDB<ColorThemeObjectdbSchema> (
-			DatabaseInterface.storage(),
-			(themeMap) => ColorThemeObjectdbSchema.fromMap(themeMap),
-		);
 		initTheme(db);
 	}
 
