@@ -33,15 +33,15 @@ class MyHomePageState extends State<MyHomePage> {
 						child:Scaffold(
 								appBar:GFAppBar(
     	    				//Menu in the AppBar
-													leading: IconButton(
-            	  									icon: const Icon(Icons.menu),
-             	 										onPressed: () {
-              	  									advancedDrawerController.toggleDrawer();
-																	},
-        	    									),
-       	 									title: Text(widget.title),
-      										centerTitle: true,
-     	 									),
+                  leading: IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () {
+                      advancedDrawerController.toggleDrawer();
+                      },
+                  ),
+                  title: Text(widget.title),
+                  centerTitle: true,
+                ),
       				  body:AdvancedDrawer(
 									drawer: GFDrawer(
                     child: ListView(
