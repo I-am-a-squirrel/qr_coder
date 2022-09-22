@@ -48,7 +48,7 @@ class MyHomePageState extends State<MyHomePage> {
 				blue: true,
 			);
 		}else{
-			defaultTheme = await themeFromDB(db);
+		     defaultTheme = await themeFromDB(db);
 		}
 	}
 
