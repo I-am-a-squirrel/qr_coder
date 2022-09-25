@@ -14,149 +14,157 @@ import 'package:qr_coder/widgets/stateful/my_home_page.dart';
 import 'package:qr_coder/widgets/objectdb/color_theme_objectdb_schema.dart';
 
 class MyHomePageState extends State<MyHomePage> {
-	final db = SchemaDB<ColorThemeObjectdbSchema> (
-	     DatabaseInterface.storage(),
-		(themeMap) => ColorThemeObjectdbSchema.fromMap(themeMap),
-	);
-     final AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
-	late MyCustomTheme defaultTheme;
-	final regexAll = RegExp(RegExp.escape(''), caseSensitive: false);
-	
-	Future<bool> isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
-               var result = db.find({
-                    'themeObject': regexAll
-               });
-               return result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
-                    return resultSchemaList.isEmpty;
-               });
-	}
+  final db = SchemaDB<ColorThemeObjectdbSchema>(
+    DatabaseInterface.storage(),
+    (themeMap) => ColorThemeObjectdbSchema.fromMap(themeMap),
+  );
+  final AdvancedDrawerController advancedDrawerController =
+      AdvancedDrawerController();
+  MyCustomTheme? defaultTheme;
+  final regexAll = RegExp(RegExp.escape(''), caseSensitive: false);
 
-	Future<MyCustomTheme> themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
-               var result = db.first({
-                    'themeObject': regexAll
-               });
-               return result.then((ColorThemeObjectdbSchema resultTheme) {
-                    return resultTheme.toMap()['themeObject'];
-               });
-	}
+  Future<bool> isDbEmpty(SchemaDB<ColorThemeObjectdbSchema> db) {
+    var result = db.find({'themeObject': regexAll});
+    return result.then((List<ColorThemeObjectdbSchema> resultSchemaList) {
+      return resultSchemaList.isEmpty;
+    });
+  }
 
-	void initTheme(db) async {
-		if(await isDbEmpty(db)) {
-			defaultTheme = MyCustomTheme(
-				red: true,
-				green: true,
-				blue: true,
-			);
-		}else{
-		     defaultTheme = await themeFromDB(db);
-		}
-	}
+  Future<MyCustomTheme> themeFromDB(SchemaDB<ColorThemeObjectdbSchema> db) {
+    var result = db.first({'themeObject': regexAll});
+    return result.then((ColorThemeObjectdbSchema resultTheme) {
+      return resultTheme.toMap()['themeObject'];
+    });
+  }
 
-	@override
-	void initState() {
-		super.initState();
-		initTheme(db);
-	}
+  void initTheme(db) async {
+    if (await isDbEmpty(db)) {
+      defaultTheme = MyCustomTheme(
+        red: true,
+        green: true,
+        blue: true,
+      );
+    } else {
+      defaultTheme = await themeFromDB(db);
+    }
+  }
 
-	@override
-	void dispose() {
-		db!.cleanup();
-		db!.insert(ColorThemeObjectdbSchema.fromMap({'themeObject': defaultTheme!}));
-		super.dispose();
-	}
+  void disposeTheme(db) async {
+    await db!.cleanup();
+    await db!.insert(
+      ColorThemeObjectdbSchema.fromMap({'themeObject': defaultTheme!})
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initTheme(db);
+  }
+
+  @override
+  void dispose() {
+    disposeTheme(db);
+    super.dispose();
+  }
 
   Widget build(BuildContext context) {
-		return BlocProvider(
-			create: (context) => ColorSchemeCubit(defaultTheme!),
-			child: BlocBuilder<ColorSchemeCubit, MyCustomTheme>(
-				builder: (context, state) {
-					return Theme(
-						data: ThemeData(
-							primaryColor: state.themeColor(
-								Colors.blue,
-							),
-						),
-						child:Scaffold(
-						     appBar:GFAppBar(
-    	    				          //Menu in the AppBar
-							     leading: IconButton(
-            	  					     icon: const Icon(Icons.menu),
-             	 						onPressed: () {
-              	  						     advancedDrawerController.toggleDrawer();
-												},
-        	    									),
-       	 						title: Text(widget.title),
-      							centerTitle: true,
-     	 								),
-      			               body:AdvancedDrawer(
-								drawer: GFDrawer(
-                                             child: ListView(
-                                                  physics: const NeverScrollableScrollPhysics(),
-                                                  children: [
-                                                  /*
+    return BlocProvider(
+      create: (context) => ColorSchemeCubit(defaultTheme ?? MyCustomTheme(
+          red: true,
+          green: true,
+          blue: true
+      )
+    ),
+      child: BlocBuilder<ColorSchemeCubit, MyCustomTheme>(
+        builder: (context, state) {
+          return Theme(
+            data: ThemeData(
+              primaryColor: state.themeColor(
+                Colors.blue,
+              ),
+            ),
+            child: Scaffold(
+              appBar: GFAppBar(
+                //Menu in the AppBar
+                leading: IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    advancedDrawerController.toggleDrawer();
+                  },
+                ),
+                title: Text(widget.title),
+                centerTitle: true,
+              ),
+              body: AdvancedDrawer(
+                drawer: GFDrawer(
+                  child: ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      /*
                                                   Red color deactivation toggle
                                                   */
-                                                       Center(
-                                                            child: Padding(
-                                                                 padding: const EdgeInsets.all(10.0),//free space around
-                                                                 child: GFToggle(
-                                                                      onChanged: (bool? redValue) {
-															context.read<ColorSchemeCubit>().toggleRed();	
-														},
-                                                                      value: state.red,
-                                                                      enabledTrackColor: Colors.red,
-                                                                      duration: const Duration(milliseconds: 100),
-                                                                      ),
-                                                                 ),
-                                                            ),
-                      
-                                                  const Divider(),
-                                                  /*
+                      Center(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.all(10.0), //free space around
+                          child: GFToggle(
+                            onChanged: (bool? redValue) {
+                              context.read<ColorSchemeCubit>().toggleRed();
+                            },
+                            value: state.red,
+                            enabledTrackColor: Colors.red,
+                            duration: const Duration(milliseconds: 100),
+                          ),
+                        ),
+                      ),
+                      const Divider(),
+                      /*
                                                   Green color deactivation toggle
                                                   */
-                                                  Center(
-                                                       child: Padding(
-                                                            padding: const EdgeInsets.all(10.0),//free space around
-                                                            child: GFToggle(
-                                                                 onChanged: (bool? greenValue) {
-														context.read<ColorSchemeCubit>().toggleGreen();
-                                                                 },
-                                                                 value: state.green,
-                                                                 enabledTrackColor: Colors.green,
-                                                                 duration: const Duration(milliseconds: 100),
-                                                                 ),
-                                                            ),
-                                                       ),
-
-                                                  const Divider(),
-                                                  /*
+                      Center(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.all(10.0), //free space around
+                          child: GFToggle(
+                            onChanged: (bool? greenValue) {
+                              context.read<ColorSchemeCubit>().toggleGreen();
+                            },
+                            value: state.green,
+                            enabledTrackColor: Colors.green,
+                            duration: const Duration(milliseconds: 100),
+                          ),
+                        ),
+                      ),
+                      const Divider(),
+                      /*
                                                   Blue color deactivation toggle
                                                   */
-                                                  Center(
-                                                       child: Padding(
-                                                            padding: const EdgeInsets.all(10.0),//free space around
-                                                            child: GFToggle(
-                                                            onChanged: (bool? blueValue) {
-                                                                 context.read<ColorSchemeCubit>().toggleBlue();
-                                                            },
-                                                            value: state.blue,
-                                                            enabledTrackColor: Colors.blue,
-                                                            duration: const Duration(milliseconds: 100),
-                                                                           ),
-                                                                      ),
-                                                                 ),
-
-                                                  const Divider(),
-                                             ],
-                                        ),
-                                   ),
-      				     controller: advancedDrawerController,
-			  			child: const MyBody(),
-    	   			     ),
-     			),
-				);
-			},
-		),
-     );
-}
+                      Center(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.all(10.0), //free space around
+                          child: GFToggle(
+                            onChanged: (bool? blueValue) {
+                              context.read<ColorSchemeCubit>().toggleBlue();
+                            },
+                            value: state.blue,
+                            enabledTrackColor: Colors.blue,
+                            duration: const Duration(milliseconds: 100),
+                          ),
+                        ),
+                      ),
+                      const Divider(),
+                    ],
+                  ),
+                ),
+                controller: advancedDrawerController,
+                child: const MyBody(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
