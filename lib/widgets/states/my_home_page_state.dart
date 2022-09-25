@@ -102,8 +102,8 @@ class MyHomePageState extends State<MyHomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
                       /*
-                                                  Red color deactivation toggle
-                                                  */
+                      Red color deactivation toggle
+                      */
                       Center(
                         child: Padding(
                           padding:
@@ -120,8 +120,8 @@ class MyHomePageState extends State<MyHomePage> {
                       ),
                       const Divider(),
                       /*
-                                                  Green color deactivation toggle
-                                                  */
+                      Green color deactivation toggle
+                      */
                       Center(
                         child: Padding(
                           padding:
@@ -138,8 +138,8 @@ class MyHomePageState extends State<MyHomePage> {
                       ),
                       const Divider(),
                       /*
-                                                  Blue color deactivation toggle
-                                                  */
+                      Blue color deactivation toggle
+                      */
                       Center(
                         child: Padding(
                           padding:
