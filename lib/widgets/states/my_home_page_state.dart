@@ -71,7 +71,7 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        ColorSchemeCubit(defaultTheme ?? MyCustomTheme(
+        return ColorSchemeCubit(defaultTheme ?? MyCustomTheme(
             red: true,
             green: true,
             blue: true
