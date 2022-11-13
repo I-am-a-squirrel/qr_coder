@@ -37,7 +37,7 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void initTheme(db) async {
+  Future<void> initTheme(db) async {
     if (await isDbEmpty(db)) {
       defaultTheme = MyCustomTheme(
         red: true,
@@ -58,8 +58,8 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    super.initState();
     initTheme(db);
+    super.initState();
   }
 
   @override
@@ -68,6 +68,7 @@ class MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
